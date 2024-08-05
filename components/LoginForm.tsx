@@ -42,7 +42,6 @@ const LoginForm = () => {
         router.push("/admin");
       }
     } catch (error) {
-      alert(error);
       console.log(error);
     }
 
