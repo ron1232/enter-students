@@ -5,7 +5,10 @@ export const LoginFormValidation = z.object({
     .string()
     .min(2, "Username must be at least 2 characters")
     .max(50, "Username must be at most 50 characters"),
-  id: z.string().length(9, "ID is not valid"),
+  id: z
+    .string()
+    .length(9, "ID is not valid")
+    .regex(/^(0|[1-9][0-9]*)$/, "ID must be numeric"),
 });
 
 export const EditOrAddStudentFormValidation = z.object({
@@ -16,6 +19,7 @@ export const EditOrAddStudentFormValidation = z.object({
   classGrade: z.string().min(2).max(50),
   phoneNumber: z
     .string()
-    .min(10, "Phone number has to have 10 characters")
-    .max(10, "Phone number has to have 10 characters"),
+    .min(10, "Phone number must have 10 characters")
+    .max(10, "Phone number must have 10 characters")
+    .regex(/^(0|[1-9][0-9]*)$/, "Phone number must be numeric"),
 });

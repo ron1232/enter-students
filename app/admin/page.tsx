@@ -4,7 +4,11 @@ import { currentStudentAtom } from "@/atoms/currentStudent";
 import DeleteStudentModal from "@/components/modals/DeleteStudentModal";
 import EditOrAddStudentModal from "@/components/modals/EditOrAddStudentModal";
 import { useAtom } from "jotai";
-import { useEffect, useLayoutEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
+import { CiTrash, CiEdit } from "react-icons/ci";
+import { MdAddBox } from "react-icons/md";
+import { RiAdminFill } from "react-icons/ri";
+import { CgNametag } from "react-icons/cg";
 
 export default function StudentsTable() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -66,8 +70,14 @@ export default function StudentsTable() {
 
   return (
     <>
-      <div className="h-full w-full overflow-auto flex flex-col justify-center items-center">
-        <table className="w-2/3 min-w-max table-auto text-left shadow-xl mb-10 mt-20 ">
+      <div className="h-full w-full overflow-auto flex flex-col justify-center items-center pt-16">
+        <h2 className="mb-10 text-3xl font-semibold flex items-center gap-2">
+          <RiAdminFill color="green" /> Admin Panel:
+        </h2>
+        <h3 className="self-start w-2/3 mx-auto mb-3 underline">
+          Students Table:
+        </h3>
+        <table className="w-2/3 min-w-max table-auto text-left shadow-xl mb-10 ">
           <thead>
             <tr>
               {TABLE_HEAD.map((head) => (
@@ -100,19 +110,23 @@ export default function StudentsTable() {
                   <td className={classes}>
                     <div className="flex gap-5">
                       <button
+                        className="flex items-center"
                         onClick={() => {
                           setIsEditModalOpen(true);
                           setCurrentStudentPhoneNumber(phoneNumber);
                         }}
                       >
+                        <CiEdit color="gray" />
                         Edit
                       </button>{" "}
                       <button
+                        className="flex items-center"
                         onClick={() => {
                           setIsDeleteModalOpen(true);
                           setCurrentStudentPhoneNumber(phoneNumber);
                         }}
                       >
+                        <CiTrash color="red" />
                         Delete
                       </button>
                     </div>
@@ -124,12 +138,12 @@ export default function StudentsTable() {
         </table>
         <div>
           <button
+            className="bg-[#002D74] rounded-xl text-white py-3 p-10 flex items-center gap-1"
             onClick={() => {
-              alert("here");
               setIsAddModalOpen(true);
             }}
           >
-            Add Student +
+            Add A Student <MdAddBox />
           </button>
         </div>
       </div>
