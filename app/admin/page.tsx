@@ -2,7 +2,7 @@
 
 import { currentStudentAtom } from "@/atoms/currentStudent";
 import DeleteStudentModal from "@/components/modals/DeleteStudentModal";
-import EditStudentModal from "@/components/modals/EditStudentModal";
+import EditOrAddStudentModal from "@/components/modals/EditOrAddStudentModal";
 import { useAtom } from "jotai";
 import { useEffect, useLayoutEffect, useMemo, useState } from "react";
 
@@ -46,7 +46,7 @@ export default function StudentsTable() {
     },
   ]);
 
-  const [currentStudent, setCurrentStudent] = useAtom(currentStudentAtom);
+  const [_, setCurrentStudent] = useAtom(currentStudentAtom);
 
   // set atom
   useMemo(() => {
@@ -66,21 +66,16 @@ export default function StudentsTable() {
 
   return (
     <>
-      <div className="h-full w-full overflow-scroll">
-        <table className="w-full min-w-max table-auto text-left">
+      <div className="h-full w-full overflow-auto flex flex-col justify-center items-center">
+        <table className="w-2/3 min-w-max table-auto text-left shadow-xl mb-10 mt-20 ">
           <thead>
             <tr>
               {TABLE_HEAD.map((head) => (
                 <th
                   key={head}
-                  className="border-b border-blue-gray-100 bg-blue-gray-50 p-4"
+                  className="border-b border-blue-gray-100 bg-blue-300 p-4 "
                 >
-                  <p
-                    color="blue-gray"
-                    className="font-normal leading-none opacity-70"
-                  >
-                    {head}
-                  </p>
+                  <p className="font-normal leading-none opacity-70">{head}</p>
                 </th>
               ))}
             </tr>
@@ -88,27 +83,19 @@ export default function StudentsTable() {
           <tbody>
             {students.map(({ name, classGrade, phoneNumber }, index) => {
               const isLast = index === students.length - 1;
-              const classes = isLast
-                ? "p-4"
-                : "p-4 border-b border-blue-gray-50";
+              const classes = isLast ? "p-4" : "p-4 border-b border-gray-500";
 
               return (
                 <tr key={name}>
                   <td className={classes}>
-                    <p color="blue-gray" className="font-normal">
-                      {name}
-                    </p>
+                    <p className="font-normal">{name}</p>
                   </td>
 
                   <td className={classes}>
-                    <p color="blue-gray" className="font-normal">
-                      {classGrade}
-                    </p>
+                    <p className="font-normal">{classGrade}</p>
                   </td>
                   <td className={classes}>
-                    <p color="blue-gray" className="font-normal">
-                      {phoneNumber}
-                    </p>
+                    <p className="font-normal">{phoneNumber}</p>
                   </td>
                   <td className={classes}>
                     <div className="flex gap-5">
@@ -135,6 +122,16 @@ export default function StudentsTable() {
             })}
           </tbody>
         </table>
+        <div>
+          <button
+            onClick={() => {
+              alert("here");
+              setIsAddModalOpen(true);
+            }}
+          >
+            Add Student +
+          </button>
+        </div>
       </div>
       <DeleteStudentModal
         isDeleteModalOpen={isDeleteModalOpen}
@@ -142,9 +139,17 @@ export default function StudentsTable() {
         handleDelete={handleDelete}
       />
       {isEditModalOpen && (
-        <EditStudentModal
-          isEditModalOpen={isEditModalOpen}
-          setIsEditModalOpen={setIsEditModalOpen}
+        <EditOrAddStudentModal
+          isModalOpen={isEditModalOpen}
+          setIsModalOpen={setIsEditModalOpen}
+          type="edit"
+        />
+      )}
+      {isAddModalOpen && (
+        <EditOrAddStudentModal
+          isModalOpen={isAddModalOpen}
+          setIsModalOpen={setIsAddModalOpen}
+          type="add"
         />
       )}
     </>

@@ -8,7 +8,7 @@ export const LoginFormValidation = z.object({
   id: z.string().length(9, "ID is not valid"),
 });
 
-export const EditStudentFormValidation = z.object({
+export const EditOrAddStudentFormValidation = z.object({
   name: z
     .string()
     .min(2, "Name must be at least 2 characters")

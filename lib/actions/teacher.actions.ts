@@ -7,3 +7,7 @@ export const loginTeacher = async (teacher: LoginTeacherParams) => {
 export const editStudent = async (student: Student) => {
   return true;
 };
+
+export const addStudent = async (student: Student) => {
+  return true;
+};

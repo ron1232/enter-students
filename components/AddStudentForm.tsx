@@ -1,21 +1,18 @@
-import { currentStudentAtom } from "@/atoms/currentStudent";
-import { editStudent } from "@/lib/actions/teacher.actions";
+import { addStudent } from "@/lib/actions/teacher.actions";
 import { EditOrAddStudentFormValidation } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useAtom } from "jotai";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 interface Props {
-  setIsEditModalOpen: (open: boolean) => void;
+  setIsAddModalOpen: (open: boolean) => void;
 }
 
-const EditStudentForm = ({ setIsEditModalOpen }: Props) => {
+const AddStudentForm = ({ setIsAddModalOpen }: Props) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [currentStudent] = useAtom(currentStudentAtom);
 
   const {
     register,
@@ -24,9 +21,9 @@ const EditStudentForm = ({ setIsEditModalOpen }: Props) => {
   } = useForm<z.infer<typeof EditOrAddStudentFormValidation>>({
     resolver: zodResolver(EditOrAddStudentFormValidation),
     defaultValues: {
-      name: currentStudent?.name,
-      classGrade: currentStudent?.classGrade,
-      phoneNumber: currentStudent?.phoneNumber,
+      name: "",
+      classGrade: "",
+      phoneNumber: "",
     },
   });
 
@@ -44,16 +41,16 @@ const EditStudentForm = ({ setIsEditModalOpen }: Props) => {
         phoneNumber,
       };
 
-      const editStudentSuccess = await editStudent(student);
+      const addStudentSuccess = await addStudent(student);
 
-      if (editStudentSuccess) {
+      if (addStudentSuccess) {
         router.refresh();
       }
     } catch (error) {
       console.log(error);
     }
 
-    setIsEditModalOpen(false);
+    setIsAddModalOpen(false);
     setIsLoading(false);
   };
 
@@ -95,11 +92,11 @@ const EditStudentForm = ({ setIsEditModalOpen }: Props) => {
             type="submit"
             disabled={isLoading}
           >
-            Edit
+            Add
           </button>
           <button
             className="btn btn-light w-full"
-            onClick={() => setIsEditModalOpen(false)}
+            onClick={() => setIsAddModalOpen(false)}
           >
             Cancel
           </button>
@@ -109,4 +106,4 @@ const EditStudentForm = ({ setIsEditModalOpen }: Props) => {
   );
 };
 
-export default EditStudentForm;
+export default AddStudentForm;
