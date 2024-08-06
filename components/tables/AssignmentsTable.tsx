@@ -1,6 +1,5 @@
 "use client";
 
-import { currentStudentAtom } from "@/atoms/currentStudent";
 import DeleteModal from "@/components/modals/DeleteModal";
 import EditOrAddModal from "@/components/modals/EditOrAddModal";
 import { useAtom } from "jotai";
@@ -57,11 +56,11 @@ export default function AssignmentsTable() {
   }, [currentAssignmentId]);
 
   const handleDelete = () => {
-    // const updatedStudents = students.filter(
-    //   (student) => student.phoneNumber !== currentStudentPhoneNumber
-    // );
-    // setStudents(updatedStudents);
-    // setIsDeleteModalOpen(false);
+    const updatedAssignments = assignments.filter(
+      (assignment) => assignment.id !== currentAssignmentId
+    );
+    setAssignments(updatedAssignments);
+    setIsDeleteModalOpen(false);
   };
 
   return (
@@ -78,7 +77,7 @@ export default function AssignmentsTable() {
           </tr>
         </thead>
         <tbody>
-          {assignments.map(({ name, body }, index) => {
+          {assignments.map(({ name, body, id }, index) => {
             const isLast = index === assignments.length - 1;
             const classes = isLast ? "p-4" : "p-4 border-b border-gray-500";
 
@@ -96,8 +95,8 @@ export default function AssignmentsTable() {
                     <button
                       className="flex items-center"
                       onClick={() => {
-                        // setIsEditModalOpen(true);
-                        // setCurrentStudentPhoneNumber(phoneNumber);
+                        setIsEditModalOpen(true);
+                        setCurrentAssignmentId(id);
                       }}
                     >
                       <CiEdit color="gray" />
@@ -106,8 +105,8 @@ export default function AssignmentsTable() {
                     <button
                       className="flex items-center"
                       onClick={() => {
-                        // setIsDeleteModalOpen(true);
-                        // setCurrentStudentPhoneNumber(phoneNumber);
+                        setIsDeleteModalOpen(true);
+                        setCurrentAssignmentId(id);
                       }}
                     >
                       <CiTrash color="red" />

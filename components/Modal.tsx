@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { X } from "react-feather";
 
 interface Props {
@@ -10,10 +11,9 @@ export default function Modal({ open, onClose, children }: Props) {
   return (
     // backdrop
     <div
-      onClick={onClose}
       className={`
         fixed inset-0 flex justify-center items-center transition-colors
-        ${open ? "visible bg-black/20" : "invisible"}
+        ${open ? "visible bg-black/20 z-50" : "invisible"}
       `}
     >
       {/* modal */}

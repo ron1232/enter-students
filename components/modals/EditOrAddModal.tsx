@@ -25,20 +25,6 @@ const EditOrAddModal = ({
           </h3>
         </div>
 
-        {/* {type === "Student" ? (
-          group === "add" ? (
-            <AddStudentForm setIsAddModalOpen={setIsModalOpen} />
-          ) : (
-            <EditStudentForm setIsEditModalOpen={setIsModalOpen} />
-          )
-        ) : type === "Assignment" ? (
-          group === "add" ? (
-          <>
-          </>
-        ) : (
-          <></>
-        )} */}
-
         {/* type assignment */}
         {type === "Assignment" ? (
           group === "add" ? (
