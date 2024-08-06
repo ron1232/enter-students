@@ -8,7 +8,7 @@ export const LoginFormValidation = z.object({
   id: z
     .string()
     .length(9, "ID is not valid")
-    .regex(/^(0|[1-9][0-9]*)$/, "ID must be numeric"),
+    .regex(/^\d+$/, "ID must be numeric"),
 });
 
 export const EditOrAddStudentFormValidation = z.object({
@@ -21,5 +21,5 @@ export const EditOrAddStudentFormValidation = z.object({
     .string()
     .min(10, "Phone number must have 10 characters")
     .max(10, "Phone number must have 10 characters")
-    .regex(/^(0|[1-9][0-9]*)$/, "Phone number must be numeric"),
+    .regex(/^\d+$/, "Phone number must be numeric"),
 });

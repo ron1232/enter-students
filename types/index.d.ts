@@ -8,3 +8,8 @@ declare interface Student {
   classGrade: string | undefined;
   phoneNumber: string | undefined;
 }
+
+declare interface Assignment {
+  name: string | undefined;
+  body: string | undefined;
+}

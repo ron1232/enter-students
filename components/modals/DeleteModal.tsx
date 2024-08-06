@@ -5,12 +5,14 @@ interface Props {
   isDeleteModalOpen: boolean;
   setIsDeleteModalOpen: (open: boolean) => void;
   handleDelete: () => void;
+  type: "Student" | "Assignment";
 }
 
-const DeleteStudentModal = ({
+const DeleteModal = ({
   isDeleteModalOpen,
   setIsDeleteModalOpen,
   handleDelete,
+  type,
 }: Props) => {
   return (
     <Modal open={isDeleteModalOpen} onClose={() => setIsDeleteModalOpen(false)}>
@@ -18,7 +20,7 @@ const DeleteStudentModal = ({
         <div className="mx-auto my-4 w-48">
           <h3 className="text-lg font-black text-gray-800">Confirm Delete</h3>
           <p className="text-sm text-gray-500">
-            Are you sure you want to delete this item?
+            Are you sure you want to delete this {type} ?
           </p>
         </div>
         <div className="flex gap-4">
@@ -37,4 +39,4 @@ const DeleteStudentModal = ({
   );
 };
 
-export default DeleteStudentModal;
+export default DeleteModal;

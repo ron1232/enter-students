@@ -8,164 +8,20 @@ import { useMemo, useState } from "react";
 import { CiTrash, CiEdit } from "react-icons/ci";
 import { MdAddBox } from "react-icons/md";
 import { RiAdminFill } from "react-icons/ri";
-import { CgNametag } from "react-icons/cg";
+import Th from "@/components/Th";
+import AssignmentsTable from "@/components/tables/AssignmentsTable";
+import StudentsTable from "@/components/tables/StudentsTable";
 
-export default function StudentsTable() {
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [currentStudentPhoneNumber, setCurrentStudentPhoneNumber] =
-    useState("0");
-
-  const TABLE_HEAD = useMemo(
-    () => ["Name", "Grade", "Phone Number", "Action"],
-    []
-  );
-
-  const [students, setStudents] = useState([
-    {
-      name: "John Michael",
-      classGrade: "First Grade",
-      phoneNumber: "0546501629",
-    },
-    {
-      name: "Alexa Liras",
-      classGrade: "First Grade",
-      phoneNumber: "0541111689",
-    },
-    {
-      name: "Laurent Perrier",
-      classGrade: "Second Grade",
-      phoneNumber: "0522211629",
-    },
-    {
-      name: "Michael Levi",
-      classGrade: "Seventh Grade",
-      phoneNumber: "0526984752",
-    },
-    {
-      name: "Richard Gran",
-      classGrade: "First Grade",
-      phoneNumber: "052694157",
-    },
-  ]);
-
-  const [_, setCurrentStudent] = useAtom(currentStudentAtom);
-
-  // set atom
-  useMemo(() => {
-    const currentStudent = students.find(
-      (student) => student.phoneNumber === currentStudentPhoneNumber
-    );
-    setCurrentStudent(currentStudent);
-  }, [currentStudentPhoneNumber]);
-
-  const handleDelete = () => {
-    const updatedStudents = students.filter(
-      (student) => student.phoneNumber !== currentStudentPhoneNumber
-    );
-    setStudents(updatedStudents);
-    setIsDeleteModalOpen(false);
-  };
-
+export default function AdminPage() {
   return (
     <>
       <div className="h-full w-full overflow-auto flex flex-col justify-center items-center pt-16">
         <h2 className="mb-10 text-3xl font-semibold flex items-center gap-2">
           <RiAdminFill color="green" /> Admin Panel:
         </h2>
-        <h3 className="self-start w-2/3 mx-auto mb-3 underline">
-          Students Table:
-        </h3>
-        <table className="w-2/3 min-w-max table-auto text-left shadow-xl mb-10 ">
-          <thead>
-            <tr>
-              {TABLE_HEAD.map((head) => (
-                <th
-                  key={head}
-                  className="border-b border-blue-gray-100 bg-blue-300 p-4 "
-                >
-                  <p className="font-normal leading-none opacity-70">{head}</p>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {students.map(({ name, classGrade, phoneNumber }, index) => {
-              const isLast = index === students.length - 1;
-              const classes = isLast ? "p-4" : "p-4 border-b border-gray-500";
-
-              return (
-                <tr key={name}>
-                  <td className={classes}>
-                    <p className="font-normal">{name}</p>
-                  </td>
-
-                  <td className={classes}>
-                    <p className="font-normal">{classGrade}</p>
-                  </td>
-                  <td className={classes}>
-                    <p className="font-normal">{phoneNumber}</p>
-                  </td>
-                  <td className={classes}>
-                    <div className="flex gap-5">
-                      <button
-                        className="flex items-center"
-                        onClick={() => {
-                          setIsEditModalOpen(true);
-                          setCurrentStudentPhoneNumber(phoneNumber);
-                        }}
-                      >
-                        <CiEdit color="gray" />
-                        Edit
-                      </button>{" "}
-                      <button
-                        className="flex items-center"
-                        onClick={() => {
-                          setIsDeleteModalOpen(true);
-                          setCurrentStudentPhoneNumber(phoneNumber);
-                        }}
-                      >
-                        <CiTrash color="red" />
-                        Delete
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-        <div>
-          <button
-            className="bg-[#002D74] rounded-xl text-white py-3 p-10 flex items-center gap-1"
-            onClick={() => {
-              setIsAddModalOpen(true);
-            }}
-          >
-            Add A Student <MdAddBox />
-          </button>
-        </div>
+        <StudentsTable />
+        <AssignmentsTable />
       </div>
-      <DeleteStudentModal
-        isDeleteModalOpen={isDeleteModalOpen}
-        setIsDeleteModalOpen={setIsDeleteModalOpen}
-        handleDelete={handleDelete}
-      />
-      {isEditModalOpen && (
-        <EditOrAddStudentModal
-          isModalOpen={isEditModalOpen}
-          setIsModalOpen={setIsEditModalOpen}
-          type="edit"
-        />
-      )}
-      {isAddModalOpen && (
-        <EditOrAddStudentModal
-          isModalOpen={isAddModalOpen}
-          setIsModalOpen={setIsAddModalOpen}
-          type="add"
-        />
-      )}
     </>
   );
 }
