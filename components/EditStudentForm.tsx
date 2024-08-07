@@ -1,5 +1,6 @@
 import { currentStudentAtom } from "@/atoms/currentStudent";
-import { editStudent } from "@/lib/actions/teacher.actions";
+import { editStudent } from "@/lib/actions/student.actions";
+import { IStudent } from "@/lib/mongodb/models/Student";
 import { EditOrAddStudentFormValidation } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAtom } from "jotai";
@@ -10,12 +11,12 @@ import { z } from "zod";
 
 interface Props {
   setIsEditModalOpen: (open: boolean) => void;
+  currentStudent: Student | undefined;
 }
 
-const EditStudentForm = ({ setIsEditModalOpen }: Props) => {
+const EditStudentForm = ({ setIsEditModalOpen, currentStudent }: Props) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [currentStudent] = useAtom(currentStudentAtom);
 
   const {
     register,
@@ -31,6 +32,7 @@ const EditStudentForm = ({ setIsEditModalOpen }: Props) => {
   });
 
   const onSubmit = async ({
+    _id,
     name,
     classGrade,
     phoneNumber,
@@ -39,12 +41,13 @@ const EditStudentForm = ({ setIsEditModalOpen }: Props) => {
 
     try {
       const student = {
+        _id,
         name,
         classGrade,
         phoneNumber,
       };
 
-      const editStudentSuccess = await editStudent(student);
+      const editStudentSuccess = await editStudent(student as IStudent);
 
       if (editStudentSuccess) {
         router.refresh();

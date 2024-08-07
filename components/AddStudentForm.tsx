@@ -1,4 +1,4 @@
-import { addStudent } from "@/lib/actions/teacher.actions";
+import { addStudent } from "@/lib/actions/student.actions";
 import { EditOrAddStudentFormValidation } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";

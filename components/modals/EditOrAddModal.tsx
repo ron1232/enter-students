@@ -8,6 +8,7 @@ interface Props {
   setIsModalOpen: (open: boolean) => void;
   type: "Student" | "Assignment";
   group: "edit" | "add";
+  currentItem?: Student | Assignment;
 }
 
 const EditOrAddModal = ({
@@ -15,6 +16,7 @@ const EditOrAddModal = ({
   setIsModalOpen,
   type,
   group,
+  currentItem,
 }: Props) => {
   return (
     <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
@@ -36,7 +38,10 @@ const EditOrAddModal = ({
         group === "add" ? (
           <AddStudentForm setIsAddModalOpen={setIsModalOpen} />
         ) : (
-          <EditStudentForm setIsEditModalOpen={setIsModalOpen} />
+          <EditStudentForm
+            setIsEditModalOpen={setIsModalOpen}
+            currentStudent={currentItem as Student | undefined}
+          />
         )}
       </div>
     </Modal>

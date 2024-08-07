@@ -2,64 +2,45 @@
 
 import DeleteModal from "@/components/modals/DeleteModal";
 import EditOrAddModal from "@/components/modals/EditOrAddModal";
-import { useAtom } from "jotai";
 import { useMemo, useState } from "react";
 import { CiTrash, CiEdit } from "react-icons/ci";
 import Th from "@/components/Th";
-import { currentAssignmentAtom } from "@/atoms/currentAssignment";
 import AddButton from "../AddButton";
+import { IAssignment } from "@/lib/mongodb/models/Assignment";
 
-export default function AssignmentsTable() {
+interface Props {
+  assignments: IAssignment[];
+}
+
+export default function AssignmentsTable({ assignments }: Props) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [currentAssignments, setCurrentAssignments] = useState(assignments);
   const [currentAssignmentId, setCurrentAssignmentId] = useState("0");
 
-  const [assignments, setAssignments] = useState([
-    {
-      id: "1",
-      name: "Write an essay",
-      body: "Write an essay about the role of english in your future career",
-    },
-    {
-      id: "2",
-      name: "Write a research",
-      body: "Write a research about the value added tax law",
-    },
-    {
-      id: "3",
-      name: "Compose a song",
-      body: "Compose a song using ai",
-    },
-    {
-      id: "4",
-      name: "Write a review",
-      body: "Write a review about a film you watched",
-    },
-    {
-      id: "5",
-      name: "Program a class",
-      body: "Program a class employee in python",
-    },
-  ]);
+  const assignmentsTableHead = useMemo(() => ["Title", "Body", "Action"], []);
 
-  const assignmentsTableHead = useMemo(() => ["Name", "Body", "Action"], []);
-
-  const [_, setCurrentAssignment] = useAtom(currentAssignmentAtom);
+  const [currentAssignment, setCurrentAssignment] = useState<
+    Assignment | undefined
+  >({
+    title: "",
+    body: "",
+  });
 
   //set atom
   useMemo(() => {
-    const currentAssignment = assignments.find(
-      (assignment) => assignment.id === currentAssignmentId
+    const currentAssignment = currentAssignments.find(
+      (assignment) => assignment._id === currentAssignmentId
     );
     setCurrentAssignment(currentAssignment);
   }, [currentAssignmentId]);
 
   const handleDelete = () => {
-    const updatedAssignments = assignments.filter(
-      (assignment) => assignment.id !== currentAssignmentId
+    const updatedAssignments = currentAssignments.filter(
+      (assignment) => assignment._id !== currentAssignmentId
     );
-    setAssignments(updatedAssignments);
+    setCurrentAssignments(updatedAssignments);
     setIsDeleteModalOpen(false);
   };
 
@@ -77,14 +58,14 @@ export default function AssignmentsTable() {
           </tr>
         </thead>
         <tbody>
-          {assignments.map(({ name, body, id }, index) => {
+          {currentAssignments.map(({ title, body, _id }, index) => {
             const isLast = index === assignments.length - 1;
             const classes = isLast ? "p-4" : "p-4 border-b border-gray-500";
 
             return (
-              <tr key={name}>
+              <tr key={_id as string}>
                 <td className={classes}>
-                  <p className="font-normal">{name}</p>
+                  <p className="font-normal">{title}</p>
                 </td>
 
                 <td className={`${classes} w-60`}>
@@ -96,7 +77,7 @@ export default function AssignmentsTable() {
                       className="flex items-center"
                       onClick={() => {
                         setIsEditModalOpen(true);
-                        setCurrentAssignmentId(id);
+                        setCurrentAssignmentId(_id as string);
                       }}
                     >
                       <CiEdit color="gray" />
@@ -106,7 +87,7 @@ export default function AssignmentsTable() {
                       className="flex items-center"
                       onClick={() => {
                         setIsDeleteModalOpen(true);
-                        setCurrentAssignmentId(id);
+                        setCurrentAssignmentId(_id as string);
                       }}
                     >
                       <CiTrash color="red" />
@@ -137,6 +118,7 @@ export default function AssignmentsTable() {
           setIsModalOpen={setIsEditModalOpen}
           type="Assignment"
           group="edit"
+          currentItem={currentAssignment}
         />
       )}
       {isAddModalOpen && (
@@ -145,6 +127,7 @@ export default function AssignmentsTable() {
           setIsModalOpen={setIsAddModalOpen}
           type="Assignment"
           group="add"
+          currentItem={currentAssignment}
         />
       )}
     </>

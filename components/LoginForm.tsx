@@ -21,20 +21,20 @@ const LoginForm = () => {
     resolver: zodResolver(LoginFormValidation),
     defaultValues: {
       username: "",
-      id: "",
+      teacherId: "",
     },
   });
 
   const onSubmit = async ({
     username,
-    id,
+    teacherId,
   }: z.infer<typeof LoginFormValidation>) => {
     setIsLoading(true);
 
     try {
       const teacher = {
         username: username,
-        id: id,
+        teacherId: teacherId,
       };
 
       const loginSuccess = await loginTeacher(teacher);
@@ -67,12 +67,12 @@ const LoginForm = () => {
           <input
             className="p-2 rounded-xl border w-full"
             type="text"
-            {...register("id")}
+            {...register("teacherId")}
             placeholder="ID"
           />
         </div>
-        {errors.id && (
-          <p className="text-red-500 text-xs">{errors.id.message}</p>
+        {errors.teacherId && (
+          <p className="text-red-500 text-xs">{errors.teacherId.message}</p>
         )}
         <button
           type="submit"
