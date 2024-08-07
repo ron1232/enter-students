@@ -5,9 +5,9 @@ import EditOrAddModal from "@/components/modals/EditOrAddModal";
 import { useAtom } from "jotai";
 import { useMemo, useState } from "react";
 import { CiTrash, CiEdit } from "react-icons/ci";
-import { MdAddBox } from "react-icons/md";
 import Th from "@/components/Th";
 import { currentAssignmentAtom } from "@/atoms/currentAssignment";
+import AddButton from "../AddButton";
 
 export default function AssignmentsTable() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -120,14 +120,10 @@ export default function AssignmentsTable() {
         </tbody>
       </table>
       <div>
-        <button
-          className="bg-[#002D74] rounded-xl text-white py-3 p-10 flex items-center gap-1 mb-10"
-          onClick={() => {
-            setIsAddModalOpen(true);
-          }}
-        >
-          Add An Assignment <MdAddBox />
-        </button>
+        <AddButton
+          text="Add An Assignment"
+          onClick={() => setIsAddModalOpen(true)}
+        />
       </div>
       <DeleteModal
         isDeleteModalOpen={isDeleteModalOpen}

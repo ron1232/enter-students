@@ -7,6 +7,7 @@ import { z } from "zod";
 import { LoginFormValidation } from "@/lib/validation";
 import { useRouter } from "next/navigation";
 import { loginTeacher } from "@/lib/actions/teacher.actions";
+import Spinner from "./Spinner";
 
 const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -76,9 +77,9 @@ const LoginForm = () => {
         <button
           type="submit"
           disabled={isLoading}
-          className="bg-[#002D74] rounded-xl text-white py-2 hover:scale-105 duration-300"
+          className="bg-[#002D74] rounded-xl text-white py-2 hover:scale-105 duration-300 flex justify-center gap-1 items-center"
         >
-          Login
+          Login {isLoading && <Spinner />}
         </button>
       </form>
     </>

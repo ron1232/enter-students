@@ -6,9 +6,8 @@ import EditOrAddModal from "@/components/modals/EditOrAddModal";
 import { useAtom } from "jotai";
 import { useMemo, useState } from "react";
 import { CiTrash, CiEdit } from "react-icons/ci";
-import { MdAddBox } from "react-icons/md";
-import { RiAdminFill } from "react-icons/ri";
 import Th from "@/components/Th";
+import AddButton from "../AddButton";
 
 export default function StudentsTable() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -128,14 +127,10 @@ export default function StudentsTable() {
         </tbody>
       </table>
       <div>
-        <button
-          className="bg-[#002D74] rounded-xl text-white py-3 p-10 flex items-center gap-1"
-          onClick={() => {
-            setIsAddModalOpen(true);
-          }}
-        >
-          Add A Student <MdAddBox />
-        </button>
+        <AddButton
+          text="Add A Student"
+          onClick={() => setIsAddModalOpen(true)}
+        />
       </div>
       <DeleteModal
         isDeleteModalOpen={isDeleteModalOpen}
