@@ -1,6 +1,7 @@
 import dbConnect from "@/lib/mongodb";
 import Assignment from "@/lib/mongodb/models/Assignment";
 import Student from "@/lib/mongodb/models/Student";
+import Teacher from "@/lib/mongodb/models/Teacher";
 import { NextResponse } from "next/server";
 
 const seedDb = async () => {
@@ -63,7 +64,32 @@ const seedDb = async () => {
 
     await Assignment.deleteMany({});
     await Assignment.insertMany(seedAssignments);
-    return NextResponse.json({ message: "Inserted Students & Assignments" });
+
+    const seedTeachers = [
+      {
+        username: "ronbarak",
+        teacherId: "5548756215",
+      },
+      {
+        username: "johndoe",
+        teacherId: "3223456789",
+      },
+      {
+        username: "israelisraeli",
+        teacherId: "9962587452",
+      },
+      {
+        username: "yakov22",
+        teacherId: "2232215487",
+      },
+    ];
+
+    await Teacher.deleteMany({});
+    await Teacher.insertMany(seedTeachers);
+
+    return NextResponse.json({
+      message: "Inserted Students, Teachers & Assignments",
+    });
   } catch (error) {
     console.log(error);
     return NextResponse.json({ message: error }, { status: 500 });

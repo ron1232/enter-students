@@ -1,5 +1,23 @@
 "use server";
 
+import dbConnect from "../mongodb";
+import Teacher from "../mongodb/models/Teacher";
+
 export const loginTeacher = async (teacher: LoginTeacherParams) => {
-  return true;
+  try {
+    await dbConnect();
+
+    const foundTeacher = await Teacher.findOne({
+      username: teacher.username,
+      teacherId: teacher.teacherId,
+    });
+
+    if (foundTeacher) {
+      return true;
+    }
+
+    return false;
+  } catch (error) {
+    return false;
+  }
 };

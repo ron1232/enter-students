@@ -11,6 +11,7 @@ import Spinner from "./Spinner";
 
 const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [loginError, setLoginError] = useState("");
   const router = useRouter();
 
   const {
@@ -40,8 +41,10 @@ const LoginForm = () => {
       const loginSuccess = await loginTeacher(teacher);
 
       if (loginSuccess) {
-        router.push("/admin");
+        return router.push("/admin");
       }
+
+      setLoginError("Username or ID not valid");
     } catch (error) {
       console.log(error);
     }
@@ -81,6 +84,7 @@ const LoginForm = () => {
         >
           Login {isLoading && <Spinner />}
         </button>
+        {loginError && <p className="text-red-500 text-sm">{loginError}</p>}
       </form>
     </>
   );

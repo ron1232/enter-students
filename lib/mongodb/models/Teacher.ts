@@ -25,6 +25,7 @@ const teacherSchema: Schema = new mongoose.Schema({
   },
 });
 
-const Teacher = mongoose.model<ITeacher>("Teacher", teacherSchema);
+const Teacher =
+  mongoose.models.Teacher || mongoose.model<ITeacher>("Teacher", teacherSchema);
 
 export default Teacher;
