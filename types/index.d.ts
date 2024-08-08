@@ -1,3 +1,5 @@
+import { DefaultSession } from "next-auth";
+
 declare interface LoginTeacherParams {
   username: string;
   teacherId: string;

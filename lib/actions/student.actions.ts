@@ -1,11 +1,14 @@
 "use server";
 
+import { checkCookie } from "../checkCookie";
 import dbConnect from "../mongodb";
 import Student, { IStudent } from "../mongodb/models/Student";
 import { parseStringify } from "../utils";
 
 export const editStudent = async (student: IStudent) => {
   try {
+    await checkCookie();
+
     await dbConnect();
 
     await Student.findByIdAndUpdate(student._id, {
@@ -18,8 +21,10 @@ export const editStudent = async (student: IStudent) => {
   }
 };
 
-export const addStudent = async (student: Student) => {
+export const addStudent = async (student: IStudent) => {
   try {
+    await checkCookie();
+
     await dbConnect();
 
     await Student.create({
@@ -34,6 +39,8 @@ export const addStudent = async (student: Student) => {
 
 export const deleteStudent = async (studentId: string) => {
   try {
+    await checkCookie();
+
     await dbConnect();
 
     await Student.findByIdAndDelete(studentId);
@@ -46,6 +53,8 @@ export const deleteStudent = async (studentId: string) => {
 
 export const getStudents = async (): Promise<IStudent[]> => {
   try {
+    await checkCookie();
+
     await dbConnect();
 
     const allStudents: IStudent[] = await Student.find({});

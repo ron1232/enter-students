@@ -1,7 +1,22 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
-const Navbar = () => {
+interface Props {
+  username: string;
+}
+
+const Navbar = ({ username }: Props) => {
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    await signOut({ callbackUrl: "", redirect: false });
+    router.push("/");
+  };
+
   return (
     <nav className="flex items-center justify-between flex-wrap bg-gray-700 p-6 shadow-xls">
       <div className="flex items-center gap-1 flex-shrink-0 text-white mr-6">
@@ -32,12 +47,13 @@ const Navbar = () => {
           </Link>
         </div>
         <div>
-          <Link
-            href="/"
+          <span className="text-white mr-3 text-sm">Welcome {username} 👋</span>
+          <button
+            onClick={handleLogout}
             className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white   mt-4 lg:mt-0"
           >
             Logout
-          </Link>
+          </button>
         </div>
       </div>
     </nav>

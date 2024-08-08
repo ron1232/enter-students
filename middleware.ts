@@ -1,15 +1,3 @@
-import { NextRequest, NextResponse } from "next/server";
+export { default } from "next-auth/middleware";
 
-const isLoggedIn: boolean = true;
-
-export function middleware(request: NextRequest) {
-  let headers = new Headers(request.headers);
-  if (isLoggedIn) {
-    return NextResponse.next();
-  }
-  return NextResponse.redirect(new URL("/", request.url));
-}
-
-export const config = {
-  matcher: ["/admin"],
-};
+export const config = { matcher: "/admin/:path*" };

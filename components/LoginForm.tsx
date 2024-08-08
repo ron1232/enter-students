@@ -6,8 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { LoginFormValidation } from "@/lib/validation";
 import { useRouter } from "next/navigation";
-import { loginTeacher } from "@/lib/actions/teacher.actions";
 import Spinner from "./Spinner";
+import { signIn } from "next-auth/react";
 
 const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -38,9 +38,13 @@ const LoginForm = () => {
         teacherId: teacherId,
       };
 
-      const loginSuccess = await loginTeacher(teacher);
+      const response = await signIn("credentials", {
+        ...teacher,
+        callbackUrl: "",
+        redirect: false,
+      });
 
-      if (loginSuccess) {
+      if (!response?.error) {
         return router.push("/admin/students");
       }
 
