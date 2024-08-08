@@ -41,7 +41,7 @@ const LoginForm = () => {
       const loginSuccess = await loginTeacher(teacher);
 
       if (loginSuccess) {
-        return router.push("/admin");
+        return router.push("/admin/students");
       }
 
       setLoginError("Username or ID not valid");

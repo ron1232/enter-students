@@ -43,7 +43,7 @@ export default function AssignmentsTable({ assignments }: Props) {
 
   return (
     <>
-      <h3 className="self-start w-2/3 mx-auto mb-3 mt-10 underline">
+      <h3 className="text-center w-2/3 mx-auto mb-3 mt-10 underline">
         Assignments Table:
       </h3>
       <table className="w-2/3 min-w-max table-auto text-left shadow-xl mb-10 ">
