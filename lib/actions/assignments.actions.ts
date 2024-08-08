@@ -4,19 +4,29 @@ import dbConnect from "../mongodb";
 import Assignment, { IAssignment } from "../mongodb/models/Assignment";
 import { parseStringify } from "../utils";
 
-export const editAssignment = async (assignment: Assignment) => {
-  await dbConnect();
+export const editAssignment = async (assignment: IAssignment) => {
+  try {
+    await dbConnect();
+
+    await Assignment.findByIdAndUpdate(assignment._id, {
+      ...assignment,
+    });
+
+    return true;
+  } catch (error) {
+    return false;
+  }
 };
 
 export const addAssignment = async (assignment: Assignment) => {
   try {
     await dbConnect();
 
-    const addedAssignment = await Assignment.create({
+    await Assignment.create({
       ...assignment,
     });
 
-    return parseStringify(addedAssignment);
+    return true;
   } catch (error) {
     return false;
   }
@@ -27,6 +37,8 @@ export const deleteAssignment = async (assignmentId: string) => {
     await dbConnect();
 
     await Assignment.findByIdAndDelete(assignmentId);
+
+    return true;
   } catch (error) {
     return false;
   }

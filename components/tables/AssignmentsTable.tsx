@@ -7,6 +7,7 @@ import { CiTrash, CiEdit } from "react-icons/ci";
 import Th from "@/components/Th";
 import AddButton from "../AddButton";
 import { IAssignment } from "@/lib/mongodb/models/Assignment";
+import { deleteAssignment } from "@/lib/actions/assignments.actions";
 
 interface Props {
   assignments: IAssignment[];
@@ -16,7 +17,6 @@ export default function AssignmentsTable({ assignments }: Props) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [currentAssignments, setCurrentAssignments] = useState(assignments);
   const [currentAssignmentId, setCurrentAssignmentId] = useState("0");
 
   const assignmentsTableHead = useMemo(() => ["Title", "Body", "Action"], []);
@@ -30,18 +30,15 @@ export default function AssignmentsTable({ assignments }: Props) {
 
   //set atom
   useMemo(() => {
-    const currentAssignment = currentAssignments.find(
+    const currentAssignment = assignments.find(
       (assignment) => assignment._id === currentAssignmentId
     );
     setCurrentAssignment(currentAssignment);
   }, [currentAssignmentId]);
 
-  const handleDelete = () => {
-    const updatedAssignments = currentAssignments.filter(
-      (assignment) => assignment._id !== currentAssignmentId
-    );
-    setCurrentAssignments(updatedAssignments);
-    setIsDeleteModalOpen(false);
+  const handleDelete = async () => {
+    await deleteAssignment(currentAssignmentId);
+    window.location.reload();
   };
 
   return (
@@ -58,7 +55,7 @@ export default function AssignmentsTable({ assignments }: Props) {
           </tr>
         </thead>
         <tbody>
-          {currentAssignments.map(({ title, body, _id }, index) => {
+          {assignments.map(({ title, body, _id }, index) => {
             const isLast = index === assignments.length - 1;
             const classes = isLast ? "p-4" : "p-4 border-b border-gray-500";
 

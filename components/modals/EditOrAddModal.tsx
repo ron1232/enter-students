@@ -3,6 +3,7 @@ import Modal from "../Modal";
 import { IStudent } from "@/lib/mongodb/models/Student";
 import { IAssignment } from "@/lib/mongodb/models/Assignment";
 import EditOrAddStudentForm from "../EditOrAddStudentForm";
+import EditOrAddAssignmentForm from "../EditOrAddAssignmentForm";
 
 interface Props {
   isModalOpen: boolean;
@@ -33,9 +34,16 @@ const EditOrAddModal = ({
         {/* type assignment */}
         {type === "Assignment" ? (
           group === "add" ? (
-            <></>
+            <EditOrAddAssignmentForm
+              group={group}
+              setIsEditOrAddModalOpen={setIsModalOpen}
+            />
           ) : (
-            <></>
+            <EditOrAddAssignmentForm
+              currentAssignment={currentItem as IAssignment | undefined}
+              group={group}
+              setIsEditOrAddModalOpen={setIsModalOpen}
+            />
           )
         ) : /* type Student */
         group === "add" ? (

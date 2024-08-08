@@ -20,7 +20,6 @@ export default function StudentsTable({ students, assignments }: Props) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [currentStudentId, setCurrentStudentId] = useState("0");
-  const [currentStudents, setCurrentStudents] = useState(students);
 
   const studentsTableHead = useMemo(
     () => ["Name", "Grade", "Phone Number", "Action"],
@@ -35,7 +34,7 @@ export default function StudentsTable({ students, assignments }: Props) {
 
   // set atom
   useMemo(() => {
-    const currentStudent = currentStudents.find(
+    const currentStudent = students.find(
       (student) => student._id === currentStudentId
     );
     setCurrentStudent(currentStudent);
@@ -43,12 +42,7 @@ export default function StudentsTable({ students, assignments }: Props) {
 
   const handleDelete = async () => {
     await deleteStudent(currentStudentId);
-
-    const updatedStudents = currentStudents.filter(
-      (student) => student._id !== currentStudentId
-    );
-    setCurrentStudents(updatedStudents);
-    setIsDeleteModalOpen(false);
+    window.location.reload();
   };
 
   return (
@@ -65,51 +59,49 @@ export default function StudentsTable({ students, assignments }: Props) {
           </tr>
         </thead>
         <tbody>
-          {currentStudents.map(
-            ({ name, classGrade, phoneNumber, _id }, index) => {
-              const isLast = index === students.length - 1;
-              const classes = isLast ? "p-4" : "p-4 border-b border-gray-500";
+          {students.map(({ name, classGrade, phoneNumber, _id }, index) => {
+            const isLast = index === students.length - 1;
+            const classes = isLast ? "p-4" : "p-4 border-b border-gray-500";
 
-              return (
-                <tr key={_id as string}>
-                  <td className={classes}>
-                    <p className="font-normal">{name}</p>
-                  </td>
+            return (
+              <tr key={_id as string}>
+                <td className={classes}>
+                  <p className="font-normal">{name}</p>
+                </td>
 
-                  <td className={classes}>
-                    <p className="font-normal">{classGrade}</p>
-                  </td>
-                  <td className={classes}>
-                    <p className="font-normal">{phoneNumber}</p>
-                  </td>
-                  <td className={classes}>
-                    <div className="flex gap-5">
-                      <button
-                        className="flex items-center"
-                        onClick={() => {
-                          setCurrentStudentId(_id as string);
-                          setIsEditModalOpen(true);
-                        }}
-                      >
-                        <CiEdit color="gray" />
-                        Edit
-                      </button>{" "}
-                      <button
-                        className="flex items-center"
-                        onClick={() => {
-                          setCurrentStudentId(_id as string);
-                          setIsDeleteModalOpen(true);
-                        }}
-                      >
-                        <CiTrash color="red" />
-                        Delete
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              );
-            }
-          )}
+                <td className={classes}>
+                  <p className="font-normal">{classGrade}</p>
+                </td>
+                <td className={classes}>
+                  <p className="font-normal">{phoneNumber}</p>
+                </td>
+                <td className={classes}>
+                  <div className="flex gap-5">
+                    <button
+                      className="flex items-center"
+                      onClick={() => {
+                        setCurrentStudentId(_id as string);
+                        setIsEditModalOpen(true);
+                      }}
+                    >
+                      <CiEdit color="gray" />
+                      Edit
+                    </button>{" "}
+                    <button
+                      className="flex items-center"
+                      onClick={() => {
+                        setCurrentStudentId(_id as string);
+                        setIsDeleteModalOpen(true);
+                      }}
+                    >
+                      <CiTrash color="red" />
+                      Delete
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
       <div>

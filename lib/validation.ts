@@ -1,6 +1,4 @@
 import { z } from "zod";
-import { ObjectId } from "mongodb";
-import mongoose from "mongoose";
 
 export const LoginFormValidation = z.object({
   username: z
@@ -14,20 +12,30 @@ export const LoginFormValidation = z.object({
 });
 
 export const EditOrAddStudentFormValidation = z.object({
-  _id: z
-    .string()
-    .refine((val) => {
-      return mongoose.Types.ObjectId.isValid(val);
-    })
-    .optional(),
+  _id: z.string().optional(),
   name: z
     .string()
     .min(2, "Name must be at least 2 characters")
     .max(50, "Name must be at most 50 characters"),
-  classGrade: z.string().min(2).max(50),
+  classGrade: z
+    .string()
+    .min(2, "Grade must be at least 2 characters")
+    .max(50, "Grade must be at most 50 characters"),
   phoneNumber: z
     .string()
     .min(10, "Phone number must have 10 characters")
     .max(10, "Phone number must have 10 characters")
     .regex(/^\d+$/, "Phone number must be numeric"),
+});
+
+export const EditOrAddAssignmentFormValidation = z.object({
+  _id: z.string().optional(),
+  title: z
+    .string()
+    .min(2, "Title must be at least 2 characters")
+    .max(50, "Title must be at most 50 characters"),
+  body: z
+    .string()
+    .min(2, "Body must be at least 2 characters")
+    .max(50, "Body must be at most 50 characters"),
 });

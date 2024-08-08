@@ -8,11 +8,11 @@ export const editStudent = async (student: IStudent) => {
   try {
     await dbConnect();
 
-    const editedStudent = await Student.findByIdAndUpdate(student._id, {
+    await Student.findByIdAndUpdate(student._id, {
       ...student,
     });
 
-    return parseStringify(editedStudent);
+    return true;
   } catch (error) {
     return false;
   }
@@ -22,11 +22,11 @@ export const addStudent = async (student: Student) => {
   try {
     await dbConnect();
 
-    const addedStudent = await Student.create({
+    await Student.create({
       ...student,
     });
 
-    return parseStringify(addedStudent);
+    return true;
   } catch (error) {
     return false;
   }
@@ -37,6 +37,8 @@ export const deleteStudent = async (studentId: string) => {
     await dbConnect();
 
     await Student.findByIdAndDelete(studentId);
+
+    return true;
   } catch (error) {
     return false;
   }

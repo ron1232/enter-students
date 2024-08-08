@@ -3,7 +3,6 @@ import { IAssignment } from "@/lib/mongodb/models/Assignment";
 import { IStudent } from "@/lib/mongodb/models/Student";
 import { EditOrAddStudentFormValidation } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
 import React, { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import Select from "react-select";
@@ -22,7 +21,6 @@ const EditOrAddStudentForm = ({
   selectItems,
   group,
 }: Props) => {
-  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -59,13 +57,13 @@ const EditOrAddStudentForm = ({
         const addStudentSuccess = await addStudent(student);
 
         if (addStudentSuccess) {
-          router.refresh();
+          window.location.reload();
         }
       } else {
         const editStudentSuccess = await editStudent(student as IStudent);
 
         if (editStudentSuccess) {
-          router.refresh();
+          window.location.reload();
         }
       }
     } catch (error) {
