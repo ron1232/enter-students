@@ -1,7 +1,8 @@
 import React from "react";
 import Modal from "../Modal";
-import EditStudentForm from "../EditStudentForm";
-import AddStudentForm from "../AddStudentForm";
+import { IStudent } from "@/lib/mongodb/models/Student";
+import { IAssignment } from "@/lib/mongodb/models/Assignment";
+import EditOrAddStudentForm from "../EditOrAddStudentForm";
 
 interface Props {
   isModalOpen: boolean;
@@ -9,6 +10,7 @@ interface Props {
   type: "Student" | "Assignment";
   group: "edit" | "add";
   currentItem?: Student | Assignment;
+  selectItems?: IStudent[] | IAssignment[];
 }
 
 const EditOrAddModal = ({
@@ -17,6 +19,7 @@ const EditOrAddModal = ({
   type,
   group,
   currentItem,
+  selectItems,
 }: Props) => {
   return (
     <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
@@ -36,11 +39,17 @@ const EditOrAddModal = ({
           )
         ) : /* type Student */
         group === "add" ? (
-          <AddStudentForm setIsAddModalOpen={setIsModalOpen} />
+          <EditOrAddStudentForm
+            setIsEditOrAddModalOpen={setIsModalOpen}
+            selectItems={selectItems as IAssignment[]}
+            group={group}
+          />
         ) : (
-          <EditStudentForm
-            setIsEditModalOpen={setIsModalOpen}
-            currentStudent={currentItem as Student | undefined}
+          <EditOrAddStudentForm
+            setIsEditOrAddModalOpen={setIsModalOpen}
+            currentStudent={currentItem as IStudent | undefined}
+            selectItems={selectItems as IAssignment[]}
+            group={group}
           />
         )}
       </div>

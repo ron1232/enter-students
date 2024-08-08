@@ -2,18 +2,20 @@
 
 import DeleteModal from "@/components/modals/DeleteModal";
 import EditOrAddModal from "@/components/modals/EditOrAddModal";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { CiTrash, CiEdit } from "react-icons/ci";
 import Th from "@/components/Th";
 import AddButton from "../AddButton";
 import { IStudent } from "@/lib/mongodb/models/Student";
 import { deleteStudent } from "@/lib/actions/student.actions";
+import { IAssignment } from "@/lib/mongodb/models/Assignment";
 
 interface Props {
   students: IStudent[];
+  assignments: IAssignment[];
 }
 
-export default function StudentsTable({ students }: Props) {
+export default function StudentsTable({ students, assignments }: Props) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -129,6 +131,7 @@ export default function StudentsTable({ students }: Props) {
           type="Student"
           group="edit"
           currentItem={currentStudent}
+          selectItems={assignments}
         />
       )}
       {isAddModalOpen && (
@@ -137,6 +140,7 @@ export default function StudentsTable({ students }: Props) {
           setIsModalOpen={setIsAddModalOpen}
           type="Student"
           group="add"
+          selectItems={assignments}
         />
       )}
     </>

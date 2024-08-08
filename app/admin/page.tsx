@@ -10,11 +10,11 @@ export default async function AdminPage() {
 
   return (
     <>
-      <div className="h-full w-full overflow-auto flex flex-col justify-center items-center pt-16">
+      <div className="h-full w-full overflow-auto flex flex-col justify-center items-center pt-16 overflow-x-hidden">
         <h2 className="mb-10 text-3xl font-semibold flex items-center gap-2">
           <RiAdminFill color="green" /> Admin Panel:
         </h2>
-        <StudentsTable students={students} />
+        <StudentsTable students={students} assignments={assignments} />
         <AssignmentsTable assignments={assignments} />
       </div>
     </>

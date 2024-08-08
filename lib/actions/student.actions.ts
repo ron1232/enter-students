@@ -12,7 +12,7 @@ export const editStudent = async (student: IStudent) => {
       ...student,
     });
 
-    return editedStudent;
+    return parseStringify(editedStudent);
   } catch (error) {
     return false;
   }

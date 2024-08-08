@@ -1,16 +1,27 @@
-import { addStudent } from "@/lib/actions/student.actions";
+import { addStudent, editStudent } from "@/lib/actions/student.actions";
+import { IAssignment } from "@/lib/mongodb/models/Assignment";
+import { IStudent } from "@/lib/mongodb/models/Student";
 import { EditOrAddStudentFormValidation } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
+import Select from "react-select";
 import { z } from "zod";
 
 interface Props {
-  setIsAddModalOpen: (open: boolean) => void;
+  setIsEditOrAddModalOpen: (open: boolean) => void;
+  currentStudent?: IStudent | undefined;
+  selectItems?: IAssignment[];
+  group: "edit" | "add";
 }
 
-const AddStudentForm = ({ setIsAddModalOpen }: Props) => {
+const EditOrAddStudentForm = ({
+  setIsEditOrAddModalOpen,
+  currentStudent,
+  selectItems,
+  group,
+}: Props) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -21,13 +32,15 @@ const AddStudentForm = ({ setIsAddModalOpen }: Props) => {
   } = useForm<z.infer<typeof EditOrAddStudentFormValidation>>({
     resolver: zodResolver(EditOrAddStudentFormValidation),
     defaultValues: {
-      name: "",
-      classGrade: "",
-      phoneNumber: "",
+      _id: currentStudent?._id as string,
+      name: currentStudent?.name,
+      classGrade: currentStudent?.classGrade,
+      phoneNumber: currentStudent?.phoneNumber,
     },
   });
 
   const onSubmit = async ({
+    _id,
     name,
     classGrade,
     phoneNumber,
@@ -39,20 +52,38 @@ const AddStudentForm = ({ setIsAddModalOpen }: Props) => {
         name,
         classGrade,
         phoneNumber,
+        ...(_id && { _id }),
       };
 
-      const addStudentSuccess = await addStudent(student);
+      if (group === "add") {
+        const addStudentSuccess = await addStudent(student);
 
-      if (addStudentSuccess) {
-        router.refresh();
+        if (addStudentSuccess) {
+          router.refresh();
+        }
+      } else {
+        const editStudentSuccess = await editStudent(student as IStudent);
+
+        if (editStudentSuccess) {
+          router.refresh();
+        }
       }
     } catch (error) {
       console.log(error);
     }
 
-    setIsAddModalOpen(false);
+    setIsEditOrAddModalOpen(false);
     setIsLoading(false);
   };
+
+  const assignmentOptions = useMemo(
+    () =>
+      selectItems?.map((item) => ({
+        value: item._id,
+        label: item.title,
+      })),
+    [selectItems]
+  );
 
   return (
     <>
@@ -85,6 +116,13 @@ const AddStudentForm = ({ setIsAddModalOpen }: Props) => {
           {errors.phoneNumber && (
             <p className="text-red-500 text-xs">{errors.phoneNumber.message}</p>
           )}
+          <Select
+            isMulti
+            name="colors"
+            options={assignmentOptions}
+            className="basic-multi-select text-left"
+            classNamePrefix="select"
+          />
         </div>
         <div className="flex gap-4">
           <button
@@ -92,11 +130,11 @@ const AddStudentForm = ({ setIsAddModalOpen }: Props) => {
             type="submit"
             disabled={isLoading}
           >
-            Add
+            {group === "add" ? "Add" : "Edit"}
           </button>
           <button
             className="btn btn-light w-full"
-            onClick={() => setIsAddModalOpen(false)}
+            onClick={() => setIsEditOrAddModalOpen(false)}
           >
             Cancel
           </button>
@@ -106,4 +144,4 @@ const AddStudentForm = ({ setIsAddModalOpen }: Props) => {
   );
 };
 
-export default AddStudentForm;
+export default EditOrAddStudentForm;
