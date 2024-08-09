@@ -11,27 +11,27 @@ const seedDb = async () => {
     const seedStudents = [
       {
         name: "John Michael",
-        classGrade: "First Grade",
+        classGrade: "Grade 1",
         phoneNumber: "0546501629",
       },
       {
         name: "Alexa Liras",
-        classGrade: "First Grade",
+        classGrade: "Grade 1",
         phoneNumber: "0541111689",
       },
       {
         name: "Laurent Perrier",
-        classGrade: "Second Grade",
+        classGrade: "Grade 2",
         phoneNumber: "0522211629",
       },
       {
         name: "Michael Levi",
-        classGrade: "Seventh Grade",
+        classGrade: "Grade 7",
         phoneNumber: "0526984752",
       },
       {
         name: "Richard Gran",
-        classGrade: "First Grade",
+        classGrade: "Grade 1",
         phoneNumber: "0526941570",
       },
     ];
@@ -68,19 +68,19 @@ const seedDb = async () => {
     const seedTeachers = [
       {
         username: "ronbarak",
-        teacherId: "5548756215",
+        teacherId: "554875621",
       },
       {
         username: "johndoe",
-        teacherId: "3223456789",
+        teacherId: "322345678",
       },
       {
         username: "israelisraeli",
-        teacherId: "9962587452",
+        teacherId: "996258745",
       },
       {
         username: "yakov22",
-        teacherId: "2232215487",
+        teacherId: "223221548",
       },
     ];
 

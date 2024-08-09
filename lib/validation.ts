@@ -11,23 +11,6 @@ export const LoginFormValidation = z.object({
     .regex(/^\d+$/, "ID must be numeric"),
 });
 
-export const EditOrAddStudentFormValidation = z.object({
-  _id: z.string().optional(),
-  name: z
-    .string()
-    .min(2, "Name must be at least 2 characters")
-    .max(50, "Name must be at most 50 characters"),
-  classGrade: z
-    .string()
-    .min(2, "Grade must be at least 2 characters")
-    .max(50, "Grade must be at most 50 characters"),
-  phoneNumber: z
-    .string()
-    .min(10, "Phone number must have 10 characters")
-    .max(10, "Phone number must have 10 characters")
-    .regex(/^\d+$/, "Phone number must be numeric"),
-});
-
 export const EditOrAddAssignmentFormValidation = z.object({
   _id: z.string().optional(),
   title: z
@@ -38,4 +21,23 @@ export const EditOrAddAssignmentFormValidation = z.object({
     .string()
     .min(2, "Body must be at least 2 characters")
     .max(50, "Body must be at most 50 characters"),
+});
+
+export const EditOrAddStudentFormValidation = z.object({
+  _id: z.string().optional(),
+  name: z
+    .string()
+    .min(2, "Name must be at least 2 characters")
+    .max(50, "Name must be at most 50 characters"),
+  classGrade: z
+    .string()
+    .min(2, "Grade must be at least 2 characters")
+    .max(50, "Grade must be at most 50 characters")
+    .regex(/^((?!Select Grade).)*$/, "Grade is not valid"),
+  phoneNumber: z
+    .string()
+    .min(10, "Phone number must have 10 characters")
+    .max(10, "Phone number must have 10 characters")
+    .regex(/^\d+$/, "Phone number must be numeric"),
+  assignments: z.array(EditOrAddAssignmentFormValidation).optional(),
 });

@@ -12,6 +12,7 @@ const studentSchema: Schema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
+    unique: true,
   },
   classGrade: {
     type: String,
@@ -20,6 +21,7 @@ const studentSchema: Schema = new mongoose.Schema({
   phoneNumber: {
     type: String,
     required: true,
+    unique: true,
     validate: {
       validator: function (v: string) {
         return /^\d+$/.test(v);

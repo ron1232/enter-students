@@ -16,8 +16,10 @@ export const editStudent = async (student: IStudent) => {
     });
 
     return true;
-  } catch (error) {
-    return false;
+  } catch (error: any) {
+    if (error?.keyValue?.name || error?.keyValue?.phoneNumber) {
+      return { errorMessage: "Name or Phone number already exists" };
+    }
   }
 };
 
@@ -32,8 +34,10 @@ export const addStudent = async (student: IStudent) => {
     });
 
     return true;
-  } catch (error) {
-    return false;
+  } catch (error: any) {
+    if (error?.keyValue?.name || error?.keyValue?.phoneNumber) {
+      return { errorMessage: "Name or Phone number already exists" };
+    }
   }
 };
 

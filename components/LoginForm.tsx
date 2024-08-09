@@ -8,10 +8,10 @@ import { LoginFormValidation } from "@/lib/validation";
 import { useRouter } from "next/navigation";
 import Spinner from "./Spinner";
 import { signIn } from "next-auth/react";
+import { toast } from "react-toastify";
 
 const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [loginError, setLoginError] = useState("");
   const router = useRouter();
 
   const {
@@ -48,7 +48,7 @@ const LoginForm = () => {
         return router.push("/admin/students");
       }
 
-      setLoginError("Username or ID not valid");
+      toast.error("Username or ID not valid");
     } catch (error) {
       console.log(error);
     }
@@ -61,14 +61,19 @@ const LoginForm = () => {
       <h2 className="font-bold text-2xl text-[#002D74]">Login | Teacher</h2>
 
       <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
+        {errors.username && (
+          <p className="text-red-500 text-xs relative top-8">
+            {errors.username.message}
+          </p>
+        )}
         <input
           className="p-2 mt-8 rounded-xl border"
           type="text"
           placeholder="Username"
           {...register("username")}
         />
-        {errors.username && (
-          <p className="text-red-500 text-xs">{errors.username.message}</p>
+        {errors.teacherId && (
+          <p className="text-red-500 text-xs">{errors.teacherId.message}</p>
         )}
         <div className="relative">
           <input
@@ -78,9 +83,6 @@ const LoginForm = () => {
             placeholder="ID"
           />
         </div>
-        {errors.teacherId && (
-          <p className="text-red-500 text-xs">{errors.teacherId.message}</p>
-        )}
         <button
           type="submit"
           disabled={isLoading}
@@ -88,7 +90,6 @@ const LoginForm = () => {
         >
           Login {isLoading && <Spinner />}
         </button>
-        {loginError && <p className="text-red-500 text-sm">{loginError}</p>}
       </form>
     </>
   );

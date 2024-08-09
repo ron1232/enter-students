@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import { authOptions } from "@/lib/authOptions";
 import { Metadata } from "next";
+import { ToastContainer } from "react-toastify";
 import { getServerSession } from "next-auth";
 
 interface Props {
@@ -17,6 +18,7 @@ const AdminLayout = async ({ children }: Props) => {
 
   return (
     <>
+      <ToastContainer />
       <Navbar username={data?.user?.username} />
       <div className="h-full w-full overflow-auto flex flex-col justify-center items-center pt-10 overflow-x-hidden">
         {children}

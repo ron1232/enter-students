@@ -1,12 +1,15 @@
 import { addStudent, editStudent } from "@/lib/actions/student.actions";
 import { IAssignment } from "@/lib/mongodb/models/Assignment";
 import { IStudent } from "@/lib/mongodb/models/Student";
+import { classGradeOptions } from "@/lib/utils";
 import { EditOrAddStudentFormValidation } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 import { z } from "zod";
+
+import { toast } from "react-toastify";
 
 interface Props {
   setIsEditOrAddModalOpen: (open: boolean) => void;
@@ -32,7 +35,7 @@ const EditOrAddStudentForm = ({
     defaultValues: {
       _id: currentStudent?._id as string,
       name: currentStudent?.name,
-      classGrade: currentStudent?.classGrade,
+      classGrade: currentStudent?.classGrade || "Select Grade",
       phoneNumber: currentStudent?.phoneNumber,
     },
   });
@@ -43,6 +46,7 @@ const EditOrAddStudentForm = ({
     classGrade,
     phoneNumber,
   }: z.infer<typeof EditOrAddStudentFormValidation>) => {
+    console.log(classGrade);
     setIsLoading(true);
 
     try {
@@ -54,17 +58,21 @@ const EditOrAddStudentForm = ({
       };
 
       if (group === "add") {
-        const addStudentSuccess = await addStudent(student as IStudent);
+        const addStudentSuccessOrFail = await addStudent(student as IStudent);
 
-        if (addStudentSuccess) {
-          window.location.reload();
+        if (addStudentSuccessOrFail === true) {
+          return window.location.reload();
         }
+
+        toast.error(addStudentSuccessOrFail?.errorMessage);
       } else {
-        const editStudentSuccess = await editStudent(student as IStudent);
+        const editStudentSuccessOrFail = await editStudent(student as IStudent);
 
-        if (editStudentSuccess) {
-          window.location.reload();
+        if (editStudentSuccessOrFail === true) {
+          return window.location.reload();
         }
+
+        toast.error(editStudentSuccessOrFail?.errorMessage);
       }
     } catch (error) {
       console.log(error);
@@ -87,23 +95,39 @@ const EditOrAddStudentForm = ({
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-4 mb-5">
+          {errors.name && (
+            <p className="text-red-500 text-xs text-left">
+              {errors.name.message}
+            </p>
+          )}
           <input
             className="p-2 rounded-xl border w-full"
             type="text"
             placeholder="Name"
             {...register("name")}
           />
-          {errors.name && (
-            <p className="text-red-500 text-xs">{errors.name.message}</p>
-          )}
-          <input
-            className="p-2 rounded-xl border w-full"
-            type="text"
-            placeholder="Grade"
-            {...register("classGrade")}
-          />
           {errors.classGrade && (
-            <p className="text-red-500 text-xs">{errors.classGrade.message}</p>
+            <p className="text-red-500 text-xs text-left">
+              {errors.classGrade.message}
+            </p>
+          )}
+          <select
+            className="p-2 rounded-xl border w-full bg-white"
+            {...register("classGrade", { required: true })}
+          >
+            <option value="Select Grade" disabled>
+              Select Grade
+            </option>
+            {classGradeOptions.map((classGrade) => (
+              <option key={classGrade.value} value={classGrade.value}>
+                {classGrade.label}
+              </option>
+            ))}
+          </select>
+          {errors.phoneNumber && (
+            <p className="text-red-500 text-xs text-left">
+              {errors.phoneNumber.message}
+            </p>
           )}
           <input
             className="p-2 rounded-xl border w-full"
@@ -111,16 +135,28 @@ const EditOrAddStudentForm = ({
             placeholder="Phone Number"
             {...register("phoneNumber")}
           />
-          {errors.phoneNumber && (
-            <p className="text-red-500 text-xs">{errors.phoneNumber.message}</p>
-          )}
           <Select
             isMulti
-            name="colors"
+            name="assignments"
             options={assignmentOptions}
             className="basic-multi-select text-left"
             classNamePrefix="select"
           />
+          {/* <Controller
+            name="assignments"
+            control={control}
+            defaultValue={undefined}
+            render={({ field }) => (
+              <Select
+                isMulti
+                {...field}
+                className="basic-multi-select text-left"
+                options={assignmentOptions}
+                onChange={(selectedOption) => field.onChange(selectedOption)}
+                value={field.value}
+              />
+            )}
+          /> */}
         </div>
         <div className="flex gap-4">
           <button

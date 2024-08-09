@@ -1,5 +1,6 @@
 "use server";
 
+import { LoginTeacherParams } from "@/types";
 import dbConnect from "../mongodb";
 import Teacher from "../mongodb/models/Teacher";
 
