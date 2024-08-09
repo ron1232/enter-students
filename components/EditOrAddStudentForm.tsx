@@ -54,7 +54,7 @@ const EditOrAddStudentForm = ({
       };
 
       if (group === "add") {
-        const addStudentSuccess = await addStudent(student);
+        const addStudentSuccess = await addStudent(student as IStudent);
 
         if (addStudentSuccess) {
           window.location.reload();

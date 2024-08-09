@@ -9,6 +9,7 @@ import AddButton from "../AddButton";
 import { IStudent } from "@/lib/mongodb/models/Student";
 import { deleteStudent } from "@/lib/actions/student.actions";
 import { IAssignment } from "@/lib/mongodb/models/Assignment";
+import { Student } from "@/types";
 
 interface Props {
   students: IStudent[];
@@ -122,7 +123,7 @@ export default function StudentsTable({ students, assignments }: Props) {
           setIsModalOpen={setIsEditModalOpen}
           type="Student"
           group="edit"
-          currentItem={currentStudent}
+          currentItem={currentStudent as IStudent}
           selectItems={assignments}
         />
       )}

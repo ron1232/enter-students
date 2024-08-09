@@ -8,6 +8,7 @@ import Th from "@/components/Th";
 import AddButton from "../AddButton";
 import { IAssignment } from "@/lib/mongodb/models/Assignment";
 import { deleteAssignment } from "@/lib/actions/assignments.actions";
+import { Assignment } from "@/types";
 
 interface Props {
   assignments: IAssignment[];
@@ -115,7 +116,7 @@ export default function AssignmentsTable({ assignments }: Props) {
           setIsModalOpen={setIsEditModalOpen}
           type="Assignment"
           group="edit"
-          currentItem={currentAssignment}
+          currentItem={currentAssignment as IAssignment}
         />
       )}
       {isAddModalOpen && (
@@ -124,7 +125,7 @@ export default function AssignmentsTable({ assignments }: Props) {
           setIsModalOpen={setIsAddModalOpen}
           type="Assignment"
           group="add"
-          currentItem={currentAssignment}
+          currentItem={currentAssignment as IAssignment}
         />
       )}
     </>

@@ -10,7 +10,7 @@ interface Props {
   setIsModalOpen: (open: boolean) => void;
   type: "Student" | "Assignment";
   group: "edit" | "add";
-  currentItem?: Student | Assignment;
+  currentItem?: IStudent | IAssignment;
   selectItems?: IStudent[] | IAssignment[];
 }
 

@@ -50,7 +50,9 @@ const EditOrAddAssignmentForm = ({
       };
 
       if (group === "add") {
-        const addAssignmentSuccess = await addAssignment(assignment);
+        const addAssignmentSuccess = await addAssignment(
+          assignment as IAssignment
+        );
 
         if (addAssignmentSuccess) {
           window.location.reload();
