@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { toast } from "react-toastify";
 
 interface Props {
   setIsEditOrAddModalOpen: (open: boolean) => void;
@@ -50,21 +51,25 @@ const EditOrAddAssignmentForm = ({
       };
 
       if (group === "add") {
-        const addAssignmentSuccess = await addAssignment(
+        const addAssignmentSuccessOrFail = await addAssignment(
           assignment as IAssignment
         );
 
-        if (addAssignmentSuccess) {
-          window.location.reload();
+        if (addAssignmentSuccessOrFail === true) {
+          return window.location.reload();
         }
+
+        toast.error("Title already exists");
       } else {
-        const editAssignmentSuccess = await editAssignment(
+        const editAssignmentSuccessOrFail = await editAssignment(
           assignment as IAssignment
         );
 
-        if (editAssignmentSuccess) {
-          window.location.reload();
+        if (editAssignmentSuccessOrFail === true) {
+          return window.location.reload();
         }
+
+        toast.error("Title already exists");
       }
     } catch (error) {
       console.log(error);
@@ -78,23 +83,27 @@ const EditOrAddAssignmentForm = ({
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-4 mb-5">
+          {errors.title && (
+            <p className="text-red-500 text-xs text-left">
+              {errors.title.message}
+            </p>
+          )}
           <input
             className="p-2 rounded-xl border w-full"
             type="text"
             placeholder="Name"
             {...register("title")}
           />
-          {errors.title && (
-            <p className="text-red-500 text-xs">{errors.title.message}</p>
+          {errors.body && (
+            <p className="text-red-500 text-xs text-left">
+              {errors.body.message}
+            </p>
           )}
           <textarea
             className="p-2 rounded-xl border w-full"
             placeholder="Body"
             {...register("body")}
           />
-          {errors.body && (
-            <p className="text-red-500 text-xs">{errors.body.message}</p>
-          )}
         </div>
         <div className="flex gap-4">
           <button

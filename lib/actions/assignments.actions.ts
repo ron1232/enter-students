@@ -16,8 +16,10 @@ export const editAssignment = async (assignment: IAssignment) => {
     });
 
     return true;
-  } catch (error) {
-    return false;
+  } catch (error: any) {
+    if (error?.keyValue?.title) {
+      return { errorMessage: "Title already exists" };
+    }
   }
 };
 
@@ -32,8 +34,10 @@ export const addAssignment = async (assignment: IAssignment) => {
     });
 
     return true;
-  } catch (error) {
-    return false;
+  } catch (error: any) {
+    if (error?.keyValue?.title) {
+      return { errorMessage: "Title already exists" };
+    }
   }
 };
 
