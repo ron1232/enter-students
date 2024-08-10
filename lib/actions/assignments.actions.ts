@@ -1,8 +1,10 @@
 "use server";
 
+import { ObjectId } from "mongodb";
 import { checkCookie } from "../checkCookie";
 import dbConnect from "../mongodb";
 import Assignment, { IAssignment } from "../mongodb/models/Assignment";
+import Student from "../mongodb/models/Student";
 import { parseStringify } from "../utils";
 
 export const editAssignment = async (assignment: IAssignment) => {
@@ -47,11 +49,23 @@ export const deleteAssignment = async (assignmentId: string) => {
 
     await dbConnect();
 
+    const foundStudents = await Student.find({
+      assignments: new ObjectId(assignmentId),
+    });
+
+    if (foundStudents.length > 0) {
+      return {
+        errorMessage: "Can't delete assignment when connected to a student",
+      };
+    }
+
     await Assignment.findByIdAndDelete(assignmentId);
 
     return true;
   } catch (error) {
-    return false;
+    return {
+      errorMessage: "Something unexpected happened",
+    };
   }
 };
 

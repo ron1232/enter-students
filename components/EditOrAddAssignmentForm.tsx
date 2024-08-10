@@ -59,7 +59,7 @@ const EditOrAddAssignmentForm = ({
           return window.location.reload();
         }
 
-        toast.error("Title already exists");
+        toast.error(addAssignmentSuccessOrFail?.errorMessage);
       } else {
         const editAssignmentSuccessOrFail = await editAssignment(
           assignment as IAssignment
@@ -69,7 +69,7 @@ const EditOrAddAssignmentForm = ({
           return window.location.reload();
         }
 
-        toast.error("Title already exists");
+        toast.error(editAssignmentSuccessOrFail?.errorMessage);
       }
     } catch (error) {
       console.log(error);

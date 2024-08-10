@@ -12,11 +12,13 @@ const teacherSchema: Schema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
+    index: true,
   },
   teacherId: {
     type: String,
     required: true,
     unique: true,
+    index: true,
     validate: {
       validator: function (v: string) {
         return /^\d+$/.test(v);

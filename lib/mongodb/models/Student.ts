@@ -18,6 +18,7 @@ const studentSchema: Schema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
+    index: true,
   },
   classGrade: {
     type: String,
@@ -28,6 +29,7 @@ const studentSchema: Schema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
+    index: true,
     validate: {
       validator: function (v: string) {
         return /^\d+$/.test(v);

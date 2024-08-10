@@ -9,6 +9,7 @@ import AddButton from "../AddButton";
 import { IAssignment } from "@/lib/mongodb/models/Assignment";
 import { deleteAssignment } from "@/lib/actions/assignments.actions";
 import { Assignment } from "@/types";
+import { toast } from "react-toastify";
 
 interface Props {
   assignments: IAssignment[];
@@ -38,8 +39,15 @@ export default function AssignmentsTable({ assignments }: Props) {
   }, [currentAssignmentId]);
 
   const handleDelete = async () => {
-    await deleteAssignment(currentAssignmentId);
-    window.location.reload();
+    const deleteAssignmentSuccessOrFail = await deleteAssignment(
+      currentAssignmentId
+    );
+    if (deleteAssignmentSuccessOrFail === true) {
+      return window.location.reload();
+    }
+
+    toast.error(deleteAssignmentSuccessOrFail?.errorMessage);
+    return setIsDeleteModalOpen(false);
   };
 
   return (

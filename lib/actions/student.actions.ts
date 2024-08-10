@@ -40,24 +40,6 @@ export const addStudent = async (student: IStudent) => {
   }
 };
 
-// export const addAssignmentsToStudent = async (
-//   studentId: string,
-//   assignmentsId: Array<ObjectId>
-// ) => {
-//   try {
-//     await checkCookie();
-
-//     await dbConnect();
-
-//     const foundStudent = await Student.findById(studentId);
-//     foundStudent.assignments.push(...assignmentsId);
-
-//     return true;
-//   } catch (error) {
-//     return false;
-//   }
-// };
-
 export const deleteStudent = async (studentId: string) => {
   try {
     await checkCookie();
