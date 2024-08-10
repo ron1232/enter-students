@@ -5,7 +5,7 @@ import { checkCookie } from "../checkCookie";
 import dbConnect from "../mongodb";
 import Assignment, { IAssignment } from "../mongodb/models/Assignment";
 import Student from "../mongodb/models/Student";
-import { parseStringify } from "../utils";
+import { itemsPerPage, parseStringify } from "../utils";
 
 export const editAssignment = async (assignment: IAssignment) => {
   try {
@@ -69,15 +69,31 @@ export const deleteAssignment = async (assignmentId: string) => {
   }
 };
 
-export const getAssignments = async (): Promise<IAssignment[]> => {
+export const getAssignments = async (
+  page: number | null = null
+): Promise<{ assignments: IAssignment[]; itemsCount: number }> => {
   try {
+    let assignments: IAssignment[] | [];
+
     await checkCookie();
 
     await dbConnect();
 
-    const allAssignments: IAssignment[] = await Assignment.find({});
-    return parseStringify(allAssignments);
+    // if Pagination
+    if (page) {
+      assignments = await Assignment.find({})
+        .skip(itemsPerPage * (page - 1))
+        .limit(itemsPerPage);
+
+      const itemsCount = await Assignment.countDocuments({});
+
+      return parseStringify({ assignments, itemsCount });
+    }
+
+    assignments = await Assignment.find({});
+
+    return parseStringify({ assignments, itemsCount: 0 });
   } catch (error: any) {
-    return [];
+    return { assignments: [], itemsCount: 0 };
   }
 };

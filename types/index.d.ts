@@ -20,3 +20,7 @@ interface ValueLabel {
   value: string;
   label: string;
 }
+
+declare interface SearchParams {
+  searchParams: { [key: string]: string | string[] | undefined };
+}

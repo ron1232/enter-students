@@ -54,3 +54,5 @@ export const classGradeOptions = [
     label: ClassGrade.Grade12,
   },
 ];
+
+export const itemsPerPage = 10;

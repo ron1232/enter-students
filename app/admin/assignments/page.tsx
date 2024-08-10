@@ -1,8 +1,22 @@
+import Pagination from "@/components/Pagination";
 import AssignmentsTable from "@/components/tables/AssignmentsTable";
 import { getAssignments } from "@/lib/actions/assignments.actions";
+import { SearchParams } from "@/types";
 
-export default async function AssignmentsPage() {
-  const assignments = await getAssignments();
+export default async function AssignmentsPage({ searchParams }: SearchParams) {
+  const page =
+    typeof searchParams.page === "string" ? Number(searchParams.page) : 1;
 
-  return <AssignmentsTable assignments={assignments} />;
+  const { assignments, itemsCount } = await getAssignments(page);
+
+  return (
+    <>
+      <AssignmentsTable assignments={assignments} />
+      <Pagination
+        itemsLength={itemsCount}
+        page={page}
+        pathname="/admin/assignments"
+      />
+    </>
+  );
 }
