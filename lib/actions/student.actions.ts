@@ -1,5 +1,6 @@
 "use server";
 
+import { ObjectId } from "mongoose";
 import { checkCookie } from "../checkCookie";
 import dbConnect from "../mongodb";
 import Student, { IStudent } from "../mongodb/models/Student";
@@ -11,9 +12,7 @@ export const editStudent = async (student: IStudent) => {
 
     await dbConnect();
 
-    await Student.findByIdAndUpdate(student._id, {
-      ...student,
-    });
+    await Student.findByIdAndUpdate(student._id, { ...student });
 
     return true;
   } catch (error: any) {
@@ -38,6 +37,24 @@ export const addStudent = async (student: IStudent) => {
     if (error?.keyValue?.name || error?.keyValue?.phoneNumber) {
       return { errorMessage: "Name or Phone number already exists" };
     }
+  }
+};
+
+export const addAssignmentsToStudent = async (
+  studentId: string,
+  assignmentsId: Array<ObjectId>
+) => {
+  try {
+    await checkCookie();
+
+    await dbConnect();
+
+    const foundStudent = await Student.findById(studentId);
+    foundStudent.assignments.push(...assignmentsId);
+
+    return true;
+  } catch (error) {
+    return false;
   }
 };
 

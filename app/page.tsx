@@ -1,10 +1,17 @@
-"use client";
-
 import LoginForm from "@/components/LoginForm";
+import { authOptions } from "@/lib/authOptions";
+import { getServerSession } from "next-auth";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 import { ToastContainer } from "react-toastify";
 
-export default function Home() {
+export default async function Home() {
+  const session = await getServerSession(authOptions);
+
+  if (session?.user) {
+    redirect("/admin/students");
+  }
+
   return (
     <>
       <ToastContainer />

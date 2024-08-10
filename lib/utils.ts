@@ -1,54 +1,56 @@
+import { ClassGrade } from "@/enums";
+
 export const parseStringify = (object: any) => {
   return JSON.parse(JSON.stringify(object));
 };
 
 export const classGradeOptions = [
   {
-    value: "Grade 1",
-    label: "Grade 1",
+    value: ClassGrade.Grade1,
+    label: ClassGrade.Grade1,
   },
   {
-    value: "Grade 2",
-    label: "Grade 2",
+    value: ClassGrade.Grade2,
+    label: ClassGrade.Grade2,
   },
   {
-    value: "Grade 3",
-    label: "Grade 3",
+    value: ClassGrade.Grade3,
+    label: ClassGrade.Grade3,
   },
   {
-    value: "Grade 4",
-    label: "Grade 4",
+    value: ClassGrade.Grade4,
+    label: ClassGrade.Grade4,
   },
   {
-    value: "Grade 5",
-    label: "Grade 5",
+    value: ClassGrade.Grade5,
+    label: ClassGrade.Grade5,
   },
   {
-    value: "Grade 6",
-    label: "Grade 6",
+    value: ClassGrade.Grade6,
+    label: ClassGrade.Grade6,
   },
   {
-    value: "Grade 7",
-    label: "Grade 7",
+    value: ClassGrade.Grade7,
+    label: ClassGrade.Grade7,
   },
   {
-    value: "Grade 8",
-    label: "Grade 8",
+    value: ClassGrade.Grade8,
+    label: ClassGrade.Grade8,
   },
   {
-    value: "Grade 9",
-    label: "Grade 9",
+    value: ClassGrade.Grade9,
+    label: ClassGrade.Grade9,
   },
   {
-    value: "Grade 10",
-    label: "Grade 10",
+    value: ClassGrade.Grade10,
+    label: ClassGrade.Grade10,
   },
   {
-    value: "Grade 11",
-    label: "Grade 11",
+    value: ClassGrade.Grade11,
+    label: ClassGrade.Grade11,
   },
   {
-    value: "Grade 12",
-    label: "Grade 12",
+    value: ClassGrade.Grade12,
+    label: ClassGrade.Grade12,
   },
 ];

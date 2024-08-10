@@ -1,5 +1,7 @@
 "use server";
 
+import { ClassGrade } from "@/enums";
+import { ObjectId } from "mongodb";
 import mongoose, { Document, Schema } from "mongoose";
 
 export interface IStudent extends Document {
@@ -17,6 +19,7 @@ const studentSchema: Schema = new mongoose.Schema({
   classGrade: {
     type: String,
     required: true,
+    enum: ClassGrade,
   },
   phoneNumber: {
     type: String,
@@ -30,6 +33,7 @@ const studentSchema: Schema = new mongoose.Schema({
         `${props.value} is not a valid phone number!`,
     },
   },
+  assignments: [{ type: ObjectId, ref: "Assignment", required: false }],
 });
 
 const Student =
