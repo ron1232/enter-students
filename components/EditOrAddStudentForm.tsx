@@ -10,6 +10,7 @@ import Select from "react-select";
 import { z } from "zod";
 
 import { toast } from "react-toastify";
+import { ValueLabel } from "@/types";
 
 interface Props {
   setIsEditOrAddModalOpen: (open: boolean) => void;
@@ -30,6 +31,7 @@ const EditOrAddStudentForm = ({
     register,
     handleSubmit,
     formState: { errors },
+    control,
   } = useForm<z.infer<typeof EditOrAddStudentFormValidation>>({
     resolver: zodResolver(EditOrAddStudentFormValidation),
     defaultValues: {
@@ -37,6 +39,11 @@ const EditOrAddStudentForm = ({
       name: currentStudent?.name,
       classGrade: currentStudent?.classGrade || "Select Grade",
       phoneNumber: currentStudent?.phoneNumber,
+      assignments:
+        currentStudent?.assignments.map((assignment) => ({
+          value: assignment._id,
+          label: assignment.title,
+        })) || [],
     },
   });
 
@@ -45,16 +52,21 @@ const EditOrAddStudentForm = ({
     name,
     classGrade,
     phoneNumber,
+    assignments,
   }: z.infer<typeof EditOrAddStudentFormValidation>) => {
-    console.log(classGrade);
     setIsLoading(true);
 
     try {
+      const assignmentIds = assignments.map(
+        (assignment: ValueLabel) => assignment.value
+      );
+
       const student = {
         name,
         classGrade,
         phoneNumber,
         ...(_id && { _id }),
+        assignments: assignmentIds,
       };
 
       if (group === "add") {
@@ -135,14 +147,7 @@ const EditOrAddStudentForm = ({
             placeholder="Phone Number"
             {...register("phoneNumber")}
           />
-          <Select
-            isMulti
-            name="assignments"
-            options={assignmentOptions}
-            className="basic-multi-select text-left"
-            classNamePrefix="select"
-          />
-          {/* <Controller
+          <Controller
             name="assignments"
             control={control}
             defaultValue={undefined}
@@ -151,12 +156,12 @@ const EditOrAddStudentForm = ({
                 isMulti
                 {...field}
                 className="basic-multi-select text-left"
-                options={assignmentOptions}
+                options={assignmentOptions as any}
                 onChange={(selectedOption) => field.onChange(selectedOption)}
                 value={field.value}
               />
             )}
-          /> */}
+          />
         </div>
         <div className="flex gap-4">
           <button

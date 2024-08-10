@@ -1,13 +1,16 @@
 "use server";
 
 import { ClassGrade } from "@/enums";
+import { Assignment } from "@/types";
 import { ObjectId } from "mongodb";
 import mongoose, { Document, Schema } from "mongoose";
+import { IAssignment } from "./Assignment";
 
 export interface IStudent extends Document {
   name: string;
   classGrade: string;
   phoneNumber: string;
+  assignments: Array<IAssignment>;
 }
 
 const studentSchema: Schema = new mongoose.Schema({

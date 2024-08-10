@@ -15,3 +15,8 @@ declare interface Student {
   classGrade: string | undefined;
   phoneNumber: string | undefined;
 }
+
+interface ValueLabel {
+  value: string;
+  label: string;
+}

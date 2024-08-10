@@ -40,23 +40,23 @@ export const addStudent = async (student: IStudent) => {
   }
 };
 
-export const addAssignmentsToStudent = async (
-  studentId: string,
-  assignmentsId: Array<ObjectId>
-) => {
-  try {
-    await checkCookie();
+// export const addAssignmentsToStudent = async (
+//   studentId: string,
+//   assignmentsId: Array<ObjectId>
+// ) => {
+//   try {
+//     await checkCookie();
 
-    await dbConnect();
+//     await dbConnect();
 
-    const foundStudent = await Student.findById(studentId);
-    foundStudent.assignments.push(...assignmentsId);
+//     const foundStudent = await Student.findById(studentId);
+//     foundStudent.assignments.push(...assignmentsId);
 
-    return true;
-  } catch (error) {
-    return false;
-  }
-};
+//     return true;
+//   } catch (error) {
+//     return false;
+//   }
+// };
 
 export const deleteStudent = async (studentId: string) => {
   try {
@@ -78,7 +78,9 @@ export const getStudents = async (): Promise<IStudent[]> => {
 
     await dbConnect();
 
-    const allStudents: IStudent[] = await Student.find({});
+    const allStudents: IStudent[] = await Student.find({}).populate(
+      "assignments"
+    );
     return parseStringify(allStudents);
   } catch (error: any) {
     return [];

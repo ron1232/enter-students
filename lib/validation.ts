@@ -39,5 +39,5 @@ export const EditOrAddStudentFormValidation = z.object({
     .min(10, "Phone number must have 10 characters")
     .max(10, "Phone number must have 10 characters")
     .regex(/^\d+$/, "Phone number must be numeric"),
-  assignments: z.array(EditOrAddAssignmentFormValidation).optional(),
+  assignments: z.any().optional(),
 });
