@@ -10,6 +10,7 @@ import { IAssignment } from "@/lib/mongodb/models/Assignment";
 import { deleteAssignment } from "@/lib/actions/assignments.actions";
 import { Assignment } from "@/types";
 import { toast } from "react-toastify";
+import TableHeader from "../TableHeader";
 
 interface Props {
   assignments: IAssignment[];
@@ -52,9 +53,7 @@ export default function AssignmentsTable({ assignments }: Props) {
 
   return (
     <>
-      <h3 className="text-center w-2/3 mx-auto mb-3 mt-10 underline">
-        Assignments Table:
-      </h3>
+      <TableHeader title="Assignments Table:" />
       <table className="w-2/3 min-w-max table-auto text-left shadow-xl mb-10 ">
         <thead>
           <tr>

@@ -4,6 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import Spinner from "./Spinner";
+import { usePathname } from "next/navigation";
 
 interface Props {
   username: string;
@@ -11,11 +14,26 @@ interface Props {
 
 const Navbar = ({ username }: Props) => {
   const router = useRouter();
+  const pathname = usePathname();
+  const [loadingStudents, setLoadingStudents] = useState(false);
+  const [loadingAssignment, setLoadingAssignment] = useState(false);
 
   const handleLogout = async () => {
     await signOut({ callbackUrl: "", redirect: false });
     router.push("/");
   };
+
+  useEffect(() => {
+    // Loading Spinner
+
+    if (pathname.includes("students")) {
+      return setLoadingStudents(false);
+    }
+
+    if (pathname.includes("assignments")) {
+      return setLoadingAssignment(false);
+    }
+  }, [pathname]);
 
   return (
     <nav className="flex items-center justify-between flex-wrap bg-gray-700 p-6 shadow-xls">
@@ -36,14 +54,26 @@ const Navbar = ({ username }: Props) => {
           <Link
             href="/admin/students"
             className="block mt-4 lg:inline-block lg:mt-0 text-white mr-4"
+            onClick={() => {
+              // Loading Spinner For Students
+              if (pathname.includes("assignments")) setLoadingStudents(true);
+            }}
           >
-            Students
+            <span className="flex items-center gap-2">
+              Students {loadingStudents && <Spinner />}
+            </span>
           </Link>
           <Link
             href="/admin/assignments"
+            onClick={() => {
+              // Loading Spinner For Assignments
+              if (pathname.includes("students")) setLoadingAssignment(true);
+            }}
             className="block mt-4 lg:inline-block lg:mt-0 text-white mr-4"
           >
-            Assignments
+            <span className="flex items-center gap-2">
+              Assignments {loadingAssignment && <Spinner />}
+            </span>
           </Link>
         </div>
         <div>
