@@ -8,15 +8,15 @@ export default async function StudentsPage({ searchParams }: SearchParams) {
   const page =
     typeof searchParams.page === "string" ? Number(searchParams.page) : 1;
 
-  const { students, itemsCount } = await getStudents(page);
+  const students = await getStudents(page);
 
-  const { assignments } = await getAssignments();
+  const assignments = await getAssignments();
 
   return (
     <>
       <StudentsTable students={students} assignments={assignments} />
       <Pagination
-        itemsLength={itemsCount}
+        itemsLength={students.length}
         page={page}
         pathname="/admin/students"
       />

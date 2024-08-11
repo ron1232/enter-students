@@ -71,7 +71,7 @@ export const deleteAssignment = async (assignmentId: string) => {
 
 export const getAssignments = async (
   page: number | null = null
-): Promise<{ assignments: IAssignment[]; itemsCount: number }> => {
+): Promise<IAssignment[]> => {
   try {
     let assignments: IAssignment[] | [];
 
@@ -85,15 +85,13 @@ export const getAssignments = async (
         .skip(itemsPerPage * (page - 1))
         .limit(itemsPerPage);
 
-      const itemsCount = await Assignment.countDocuments({});
-
-      return parseStringify({ assignments, itemsCount });
+      return parseStringify(assignments);
     }
 
     assignments = await Assignment.find({});
 
-    return parseStringify({ assignments, itemsCount: 0 });
+    return parseStringify(assignments);
   } catch (error: any) {
-    return { assignments: [], itemsCount: 0 };
+    return [];
   }
 };

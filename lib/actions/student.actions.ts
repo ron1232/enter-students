@@ -53,9 +53,7 @@ export const deleteStudent = async (studentId: string) => {
   }
 };
 
-export const getStudents = async (
-  page = 1
-): Promise<{ students: IStudent[]; itemsCount: number }> => {
+export const getStudents = async (page = 1): Promise<IStudent[]> => {
   try {
     await checkCookie();
 
@@ -67,9 +65,8 @@ export const getStudents = async (
       .skip(itemsPerPage * (page - 1))
       .limit(itemsPerPage);
 
-    const itemsCount = await Student.countDocuments({});
-    return parseStringify({ students, itemsCount });
+    return parseStringify(students);
   } catch (error: any) {
-    return { students: [], itemsCount: 0 };
+    return [];
   }
 };
