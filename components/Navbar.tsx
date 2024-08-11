@@ -53,13 +53,13 @@ const Navbar = ({ username }: Props) => {
         <div className="text-sm lg:flex-grow">
           <Link
             href="/admin/students"
-            className="block mt-4 lg:inline-block lg:mt-0 text-white mr-4"
+            className="block mt-4 lg:inline-block lg:mt-0 text-white w-20"
             onClick={() => {
               // Loading Spinner For Students
               if (pathname.includes("assignments")) setLoadingStudents(true);
             }}
           >
-            <span className="flex items-center gap-2">
+            <span className="flex items-center gap-1">
               Students {loadingStudents && <Spinner />}
             </span>
           </Link>
@@ -71,7 +71,7 @@ const Navbar = ({ username }: Props) => {
             }}
             className="block mt-4 lg:inline-block lg:mt-0 text-white mr-4"
           >
-            <span className="flex items-center gap-2">
+            <span className="flex items-center gap-1">
               Assignments {loadingAssignment && <Spinner />}
             </span>
           </Link>
