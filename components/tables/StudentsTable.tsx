@@ -39,7 +39,6 @@ export default function StudentsTable({
     phoneNumber: "",
   });
 
-  // set atom
   useMemo(() => {
     const currentStudent = students.find(
       (student) => student._id === currentStudentId

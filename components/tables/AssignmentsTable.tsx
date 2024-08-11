@@ -32,7 +32,6 @@ export default function AssignmentsTable({ assignments, children }: Props) {
     body: "",
   });
 
-  //set atom
   useMemo(() => {
     const currentAssignment = assignments.find(
       (assignment) => assignment._id === currentAssignmentId
@@ -56,7 +55,7 @@ export default function AssignmentsTable({ assignments, children }: Props) {
     <>
       <TableHeader title="Assignments Table:" />
       {children}
-      <table className="w-2/3 min-w-max table-auto text-left shadow-xl mb-10 ">
+      <table className="w-2/3 min-w-max text-left shadow-xl mb-10 ">
         <thead>
           <tr>
             {assignmentsTableHead.map((head) => (
