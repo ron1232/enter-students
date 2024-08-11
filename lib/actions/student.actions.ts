@@ -53,7 +53,10 @@ export const deleteStudent = async (studentId: string) => {
   }
 };
 
-export const getStudents = async (page = 1): Promise<IStudent[]> => {
+export const getStudents = async (
+  page = 1,
+  search = ""
+): Promise<IStudent[]> => {
   try {
     await checkCookie();
 
@@ -61,7 +64,17 @@ export const getStudents = async (page = 1): Promise<IStudent[]> => {
 
     const students: IStudent[] = await Student.find({})
       .populate("assignments")
-      .find({})
+      .find({
+        ...{
+          $or: [
+            {
+              name: {
+                $regex: new RegExp(search.toLowerCase(), "i"),
+              },
+            },
+          ],
+        },
+      })
       .skip(itemsPerPage * (page - 1))
       .limit(itemsPerPage);
 

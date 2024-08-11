@@ -15,9 +15,14 @@ import TableHeader from "../TableHeader";
 interface Props {
   students: IStudent[];
   assignments: IAssignment[];
+  children: React.ReactNode;
 }
 
-export default function StudentsTable({ students, assignments }: Props) {
+export default function StudentsTable({
+  students,
+  assignments,
+  children,
+}: Props) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -50,6 +55,7 @@ export default function StudentsTable({ students, assignments }: Props) {
   return (
     <>
       <TableHeader title="Students Table:" />
+      {children}
       <table className="w-2/3 min-w-max table-auto text-left shadow-xl mb-10 ">
         <thead>
           <tr>
