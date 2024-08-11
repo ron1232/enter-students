@@ -19,13 +19,9 @@ export default async function StudentsPage({ searchParams }: SearchParams) {
   return (
     <>
       <StudentsTable students={students} assignments={assignments}>
-        <Search search={search} type="students" />
+        <Search type="students" />
       </StudentsTable>
-      <Pagination
-        itemsLength={students.length}
-        page={page}
-        pathname="/admin/students"
-      />
+      <Pagination itemsLength={students.length} pathname="/admin/students" />
     </>
   );
 }

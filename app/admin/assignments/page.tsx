@@ -16,11 +16,10 @@ export default async function AssignmentsPage({ searchParams }: SearchParams) {
   return (
     <>
       <AssignmentsTable assignments={assignments}>
-        <Search type="assignments" search={search} />
+        <Search type="assignments" />
       </AssignmentsTable>
       <Pagination
         itemsLength={assignments.length}
-        page={page}
         pathname="/admin/assignments"
       />
     </>

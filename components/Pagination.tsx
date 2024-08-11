@@ -1,13 +1,19 @@
+"use client";
+
 import clsx from "clsx";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 interface Props {
-  page: number;
   pathname: string;
   itemsLength: number;
 }
 
-const Pagination = ({ page, pathname, itemsLength }: Props) => {
+const Pagination = ({ pathname, itemsLength }: Props) => {
+  const searchParams = useSearchParams();
+  const search = searchParams.get("search");
+  const page: number = Number(searchParams.get("page")) || 1;
+
   return (
     <div className="mb-12 flex items-center justify-between gap-x-16">
       <div className="flex space-x-6">
@@ -15,6 +21,7 @@ const Pagination = ({ page, pathname, itemsLength }: Props) => {
           href={{
             pathname: pathname,
             query: {
+              search: search !== "" ? search : "",
               page: page > 1 ? page - 1 : 1,
             },
           }}
@@ -29,6 +36,7 @@ const Pagination = ({ page, pathname, itemsLength }: Props) => {
           href={{
             pathname: pathname,
             query: {
+              search: search !== "" ? search : "",
               page: page + 1,
             },
           }}

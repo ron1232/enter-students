@@ -4,18 +4,14 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useDebounce } from "use-debounce";
 import { CiSearch } from "react-icons/ci";
+import { useSearchParams } from "next/navigation";
 
-const Search = ({
-  search,
-  type,
-}: {
-  search?: string;
-  type: "students" | "assignments";
-}) => {
+const Search = ({ type }: { type: "students" | "assignments" }) => {
+  const searchParams = useSearchParams();
   const router = useRouter();
   const initialRender = useRef(true);
 
-  const [text, setText] = useState(search);
+  const [text, setText] = useState<string>(searchParams.get("search") || "");
   const [query] = useDebounce(text, 750);
 
   useEffect(() => {
