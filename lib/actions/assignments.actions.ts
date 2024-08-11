@@ -70,7 +70,8 @@ export const deleteAssignment = async (assignmentId: string) => {
 };
 
 export const getAssignments = async (
-  page: number | null = null
+  page: number | null = null,
+  search = ""
 ): Promise<IAssignment[]> => {
   try {
     let assignments: IAssignment[] | [];
@@ -81,14 +82,30 @@ export const getAssignments = async (
 
     // if Pagination
     if (page) {
-      assignments = await Assignment.find({})
+      assignments = await Assignment.find({
+        $or: [
+          {
+            title: {
+              $regex: new RegExp(search.toLowerCase(), "i"),
+            },
+          },
+        ],
+      })
         .skip(itemsPerPage * (page - 1))
         .limit(itemsPerPage);
 
       return parseStringify(assignments);
     }
 
-    assignments = await Assignment.find({});
+    assignments = await Assignment.find({
+      $or: [
+        {
+          title: {
+            $regex: new RegExp(search.toLowerCase(), "i"),
+          },
+        },
+      ],
+    });
 
     return parseStringify(assignments);
   } catch (error: any) {

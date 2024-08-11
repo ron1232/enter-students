@@ -65,15 +65,13 @@ export const getStudents = async (
     const students: IStudent[] = await Student.find({})
       .populate("assignments")
       .find({
-        ...{
-          $or: [
-            {
-              name: {
-                $regex: new RegExp(search.toLowerCase(), "i"),
-              },
+        $or: [
+          {
+            name: {
+              $regex: new RegExp(search.toLowerCase(), "i"),
             },
-          ],
-        },
+          },
+        ],
       })
       .skip(itemsPerPage * (page - 1))
       .limit(itemsPerPage);

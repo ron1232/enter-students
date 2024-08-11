@@ -14,9 +14,10 @@ import TableHeader from "../TableHeader";
 
 interface Props {
   assignments: IAssignment[];
+  children: React.ReactNode;
 }
 
-export default function AssignmentsTable({ assignments }: Props) {
+export default function AssignmentsTable({ assignments, children }: Props) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -54,6 +55,7 @@ export default function AssignmentsTable({ assignments }: Props) {
   return (
     <>
       <TableHeader title="Assignments Table:" />
+      {children}
       <table className="w-2/3 min-w-max table-auto text-left shadow-xl mb-10 ">
         <thead>
           <tr>
