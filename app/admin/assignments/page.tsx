@@ -11,7 +11,10 @@ export default async function AssignmentsPage({ searchParams }: SearchParams) {
   const search =
     typeof searchParams.search === "string" ? searchParams.search : "";
 
-  const assignments = await getAssignments(page, search);
+  const { assignments, itemsCountForNextPage } = await getAssignments(
+    page,
+    search
+  );
 
   return (
     <>
@@ -19,7 +22,7 @@ export default async function AssignmentsPage({ searchParams }: SearchParams) {
         <Search type="assignments" />
       </AssignmentsTable>
       <Pagination
-        itemsLength={assignments.length}
+        itemsLength={itemsCountForNextPage}
         pathname="/admin/assignments"
       />
     </>

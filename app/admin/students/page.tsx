@@ -12,16 +12,19 @@ export default async function StudentsPage({ searchParams }: SearchParams) {
   const search =
     typeof searchParams.search === "string" ? searchParams.search : "";
 
-  const students = await getStudents(page, search);
+  const { students, itemsCountForNextPage } = await getStudents(page, search);
 
-  const assignments = await getAssignments();
+  const { assignments } = await getAssignments();
 
   return (
     <>
       <StudentsTable students={students} assignments={assignments}>
         <Search type="students" />
       </StudentsTable>
-      <Pagination itemsLength={students.length} pathname="/admin/students" />
+      <Pagination
+        itemsLength={itemsCountForNextPage}
+        pathname="/admin/students"
+      />
     </>
   );
 }
