@@ -1,13 +1,14 @@
 "use server";
 
-import { checkCookie } from "../checkCookie";
+import { checkAuth } from "../checkAuth";
 import dbConnect from "../mongodb";
 import Student, { IStudent } from "../mongodb/models/Student";
 import { itemsPerPage, parseStringify } from "../utils";
 
 export const editStudent = async (student: IStudent) => {
   try {
-    await checkCookie();
+    const isAuth = await checkAuth();
+    if (!isAuth) return false;
 
     await dbConnect();
 
@@ -27,7 +28,8 @@ export const editStudent = async (student: IStudent) => {
 
 export const addStudent = async (student: IStudent) => {
   try {
-    await checkCookie();
+    const isAuth = await checkAuth();
+    if (!isAuth) return false;
 
     await dbConnect();
 
@@ -47,7 +49,8 @@ export const addStudent = async (student: IStudent) => {
 
 export const deleteStudent = async (studentId: string) => {
   try {
-    await checkCookie();
+    const isAuth = await checkAuth();
+    if (!isAuth) return false;
 
     await dbConnect();
 
@@ -64,7 +67,8 @@ export const getStudents = async (
   search = ""
 ): Promise<{ students: IStudent[]; itemsCountForNextPage: number }> => {
   try {
-    await checkCookie();
+    const isAuth = await checkAuth();
+    if (!isAuth) return { students: [], itemsCountForNextPage: 0 };
 
     await dbConnect();
 

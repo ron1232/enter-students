@@ -1,15 +1,16 @@
 "use server";
 
 import { ObjectId } from "mongodb";
-import { checkCookie } from "../checkCookie";
 import dbConnect from "../mongodb";
 import Assignment, { IAssignment } from "../mongodb/models/Assignment";
 import Student from "../mongodb/models/Student";
 import { itemsPerPage, parseStringify } from "../utils";
+import { checkAuth } from "../checkAuth";
 
 export const editAssignment = async (assignment: IAssignment) => {
   try {
-    await checkCookie();
+    const isAuth = await checkAuth();
+    if (!isAuth) return false;
 
     await dbConnect();
 
@@ -32,7 +33,8 @@ export const editAssignment = async (assignment: IAssignment) => {
 
 export const addAssignment = async (assignment: IAssignment) => {
   try {
-    await checkCookie();
+    const isAuth = await checkAuth();
+    if (!isAuth) return false;
 
     await dbConnect();
 
@@ -52,7 +54,8 @@ export const addAssignment = async (assignment: IAssignment) => {
 
 export const deleteAssignment = async (assignmentId: string) => {
   try {
-    await checkCookie();
+    const isAuth = await checkAuth();
+    if (!isAuth) return false;
 
     await dbConnect();
 
@@ -84,9 +87,10 @@ export const getAssignments = async (
   itemsCountForNextPage: number;
 }> => {
   try {
-    let assignments: IAssignment[] | [];
+    const isAuth = await checkAuth();
+    if (!isAuth) return { assignments: [], itemsCountForNextPage: 0 };
 
-    await checkCookie();
+    let assignments: IAssignment[] | [];
 
     await dbConnect();
 
