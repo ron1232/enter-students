@@ -12,7 +12,7 @@ const Search = ({ type }: { type: "students" | "assignments" }) => {
   const initialRender = useRef(true);
 
   const [text, setText] = useState<string>(searchParams.get("search") || "");
-  const [query] = useDebounce(text, 750);
+  const [query] = useDebounce(text, 250);
 
   useEffect(() => {
     if (initialRender.current) {
