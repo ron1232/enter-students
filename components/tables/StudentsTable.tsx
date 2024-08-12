@@ -11,6 +11,7 @@ import { deleteStudent } from "@/lib/actions/student.actions";
 import { IAssignment } from "@/lib/mongodb/models/Assignment";
 import { Student } from "@/types";
 import TableHeader from "../TableHeader";
+import { useRouter } from "next/navigation";
 
 interface Props {
   students: IStudent[];
@@ -27,6 +28,7 @@ export default function StudentsTable({
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [currentStudentId, setCurrentStudentId] = useState("0");
+  const router = useRouter();
 
   const studentsTableHead = useMemo(
     () => ["Name", "Grade", "Phone Number", "Action"],
@@ -48,7 +50,9 @@ export default function StudentsTable({
 
   const handleDelete = async () => {
     await deleteStudent(currentStudentId);
-    window.location.reload();
+    router.refresh();
+    setIsDeleteModalOpen(false);
+    // window.location.reload();
   };
 
   return (

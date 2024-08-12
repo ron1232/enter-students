@@ -11,6 +11,7 @@ import { deleteAssignment } from "@/lib/actions/assignments.actions";
 import { Assignment } from "@/types";
 import { toast } from "react-toastify";
 import TableHeader from "../TableHeader";
+import { useRouter } from "next/navigation";
 
 interface Props {
   assignments: IAssignment[];
@@ -22,6 +23,7 @@ export default function AssignmentsTable({ assignments, children }: Props) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [currentAssignmentId, setCurrentAssignmentId] = useState("0");
+  const router = useRouter();
 
   const assignmentsTableHead = useMemo(() => ["Title", "Body", "Action"], []);
 
@@ -43,8 +45,10 @@ export default function AssignmentsTable({ assignments, children }: Props) {
     const deleteAssignmentSuccessOrFail = await deleteAssignment(
       currentAssignmentId
     );
+
     if (deleteAssignmentSuccessOrFail === true) {
-      return window.location.reload();
+      router.refresh();
+      return setIsDeleteModalOpen(false);
     }
 
     toast.error(deleteAssignmentSuccessOrFail?.errorMessage);
