@@ -4,6 +4,8 @@ import { getAssignments } from "@/lib/actions/assignments.actions";
 import { SearchParams } from "@/types";
 import Pagination from "@/components/Pagination";
 import Search from "@/components/Search";
+import { PiStudentFill } from "react-icons/pi";
+import { PiChalkboardTeacherFill } from "react-icons/pi";
 
 export default async function StudentsPage({ searchParams }: SearchParams) {
   const page =
@@ -20,6 +22,14 @@ export default async function StudentsPage({ searchParams }: SearchParams) {
     <>
       <StudentsTable students={students} assignments={assignments}>
         <Search type="students" />
+        <PiStudentFill
+          className="absolute top-52 left-5 rotate-45"
+          size={100}
+        />
+        <PiChalkboardTeacherFill
+          className="absolute top-52 right-5 -rotate-45"
+          size={80}
+        />
       </StudentsTable>
       <Pagination
         itemsLength={itemsCountForNextPage}
