@@ -52,7 +52,6 @@ export default function StudentsTable({
     await deleteStudent(currentStudentId);
     router.refresh();
     setIsDeleteModalOpen(false);
-    // window.location.reload();
   };
 
   return (
