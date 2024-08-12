@@ -18,6 +18,15 @@ const assignmentSchema: Schema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  updatedAt: {
+    type: Date,
+    default: Date.now(),
+  },
+});
+
+assignmentSchema.pre("save", function (next) {
+  this.updatedAt = Date.now();
+  next();
 });
 
 const Assignment =

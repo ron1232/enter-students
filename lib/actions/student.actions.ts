@@ -11,7 +11,11 @@ export const editStudent = async (student: IStudent) => {
 
     await dbConnect();
 
-    await Student.findByIdAndUpdate(student._id, { ...student });
+    const updatedStudent = await Student.findByIdAndUpdate(student._id, {
+      ...student,
+    });
+
+    await updatedStudent.save();
 
     return true;
   } catch (error: any) {
@@ -27,9 +31,11 @@ export const addStudent = async (student: IStudent) => {
 
     await dbConnect();
 
-    await Student.create({
+    const createdStudent = await Student.create({
       ...student,
     });
+
+    await createdStudent.save();
 
     return true;
   } catch (error: any) {
@@ -74,7 +80,8 @@ export const getStudents = async (
         ],
       })
       .skip(itemsPerPage * (page - 1))
-      .limit(itemsPerPage);
+      .limit(itemsPerPage)
+      .sort({ updatedAt: "desc" });
 
     const studentsCountForNextPage = await Student.countDocuments().skip(
       itemsPerPage * page

@@ -13,9 +13,14 @@ export const editAssignment = async (assignment: IAssignment) => {
 
     await dbConnect();
 
-    await Assignment.findByIdAndUpdate(assignment._id, {
-      ...assignment,
-    });
+    const updatedAssignment = await Assignment.findByIdAndUpdate(
+      assignment._id,
+      {
+        ...assignment,
+      }
+    );
+
+    await updatedAssignment.save();
 
     return true;
   } catch (error: any) {
@@ -31,9 +36,11 @@ export const addAssignment = async (assignment: IAssignment) => {
 
     await dbConnect();
 
-    await Assignment.create({
+    const createdAssignment = await Assignment.create({
       ...assignment,
     });
+
+    await createdAssignment.save();
 
     return true;
   } catch (error: any) {
@@ -95,7 +102,8 @@ export const getAssignments = async (
         ],
       })
         .skip(itemsPerPage * (page - 1))
-        .limit(itemsPerPage);
+        .limit(itemsPerPage)
+        .sort({ updatedAt: "desc" });
 
       const assignmentsCountForNextPage =
         await Assignment.countDocuments().skip(itemsPerPage * page);
@@ -114,7 +122,7 @@ export const getAssignments = async (
           },
         },
       ],
-    });
+    }).sort({ updatedAt: "desc" });
 
     return parseStringify({ assignments, itemsCountForNextPage: 0 });
   } catch (error: any) {

@@ -39,6 +39,15 @@ const studentSchema: Schema = new mongoose.Schema({
     },
   },
   assignments: [{ type: ObjectId, ref: "Assignment", required: false }],
+  updatedAt: {
+    type: Date,
+    default: Date.now(),
+  },
+});
+
+studentSchema.pre("save", function (next) {
+  this.updatedAt = Date.now();
+  next();
 });
 
 const Student =
