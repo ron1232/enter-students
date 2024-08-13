@@ -14,12 +14,10 @@ export const metadata: Metadata = {
 };
 
 const AdminLayout = async ({ children }: Props) => {
-  const data = await getServerSession(authOptions);
-
   return (
     <>
       <ToastContainer />
-      <Navbar username={data?.user?.username as string} />
+      <Navbar />
       <div className="h-full w-full overflow-auto flex flex-col justify-center items-center pt-10 overflow-x-hidden">
         {children}
       </div>
