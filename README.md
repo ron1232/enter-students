@@ -3,7 +3,9 @@
 1. Create .env.local in the folder, add these three env variables (make sure you got mongodb service running):
 
 MONGODB_URI=mongodb://localhost:27017
+
 NEXTAUTH_SECRET=TsjHs5blRKtv4c/3LBa9YmRnZUt0pbRbZSdwjnvb6CM=
+
 NEXTAUTH_URL=http://localhost:3000/
 
 2. Run `npm run build`
