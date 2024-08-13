@@ -30,9 +30,39 @@ const seedDb = async () => {
         phoneNumber: "0526984752",
       },
       {
-        name: "Richard Gran",
+        name: "Cecil Preston",
         classGrade: "Grade 1",
+        phoneNumber: "0526941572",
+      },
+      {
+        name: "Nataniel Pearson",
+        classGrade: "Grade 3",
+        phoneNumber: "0526941555",
+      },
+      {
+        name: "Conrad Cruz",
+        classGrade: "Grade 7",
+        phoneNumber: "0527741588",
+      },
+      {
+        name: "Rishi Crane",
+        classGrade: "Grade 2",
         phoneNumber: "0526941570",
+      },
+      {
+        name: "Sylvia Padilla",
+        classGrade: "Grade 5",
+        phoneNumber: "0526947777",
+      },
+      {
+        name: "Yasmine Jordan",
+        classGrade: "Grade 1",
+        phoneNumber: "0526941996",
+      },
+      {
+        name: "Zak Cervantes",
+        classGrade: "Grade 1",
+        phoneNumber: "0526941599",
       },
     ];
 
