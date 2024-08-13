@@ -12,6 +12,7 @@ NEXTAUTH_URL=http://localhost:3000/
 3. Wait for build to finish
 4. Run `npm run start`
 5. Go to http://localhost:3000/api/seed
+
    This will seed mongodb database
 6. Go to http://localhost:3000 and login with username: ronbarak, id: 554875621
 
