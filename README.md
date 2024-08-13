@@ -1,5 +1,9 @@
 ## Getting Started
 
+`node version: v20.16.0`
+`npm version: 10.8.1`
+
+
 1. Create .env.local in the folder, add these three env variables (make sure you got mongodb service running):
 
 MONGODB_URI=mongodb://localhost:27017
