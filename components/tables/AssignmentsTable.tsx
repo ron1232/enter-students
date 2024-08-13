@@ -51,7 +51,10 @@ export default function AssignmentsTable({ assignments, children }: Props) {
       return setIsDeleteModalOpen(false);
     }
 
-    toast.error(deleteAssignmentSuccessOrFail?.errorMessage);
+    if (deleteAssignmentSuccessOrFail) {
+      toast.error(deleteAssignmentSuccessOrFail?.errorMessage);
+    }
+
     return setIsDeleteModalOpen(false);
   };
 

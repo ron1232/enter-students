@@ -76,7 +76,9 @@ const EditOrAddStudentForm = ({
           return window.location.reload();
         }
 
-        toast.error(addStudentSuccessOrFail?.errorMessage);
+        if (addStudentSuccessOrFail) {
+          toast.error(addStudentSuccessOrFail?.errorMessage);
+        }
       } else {
         const editStudentSuccessOrFail = await editStudent(student as IStudent);
 
@@ -84,7 +86,9 @@ const EditOrAddStudentForm = ({
           return window.location.reload();
         }
 
-        toast.error(editStudentSuccessOrFail?.errorMessage);
+        if (editStudentSuccessOrFail) {
+          toast.error(editStudentSuccessOrFail?.errorMessage);
+        }
       }
     } catch (error) {
       console.log(error);

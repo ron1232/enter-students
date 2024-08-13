@@ -59,7 +59,9 @@ const EditOrAddAssignmentForm = ({
           return window.location.reload();
         }
 
-        toast.error(addAssignmentSuccessOrFail?.errorMessage);
+        if (addAssignmentSuccessOrFail) {
+          toast.error(addAssignmentSuccessOrFail?.errorMessage);
+        }
       } else {
         const editAssignmentSuccessOrFail = await editAssignment(
           assignment as IAssignment
@@ -69,7 +71,9 @@ const EditOrAddAssignmentForm = ({
           return window.location.reload();
         }
 
-        toast.error(editAssignmentSuccessOrFail?.errorMessage);
+        if (editAssignmentSuccessOrFail) {
+          toast.error(editAssignmentSuccessOrFail?.errorMessage);
+        }
       }
     } catch (error) {
       console.log(error);
