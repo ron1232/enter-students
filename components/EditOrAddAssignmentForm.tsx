@@ -95,7 +95,7 @@ const EditOrAddAssignmentForm = ({
           <input
             className="p-2 rounded-xl border w-full"
             type="text"
-            placeholder="Name"
+            placeholder="Title"
             {...register("title")}
           />
           {errors.body && (
