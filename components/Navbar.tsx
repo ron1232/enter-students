@@ -8,11 +8,7 @@ import { useEffect, useState } from "react";
 import Spinner from "./Spinner";
 import { usePathname } from "next/navigation";
 
-interface Props {
-  username: string;
-}
-
-const Navbar = ({ username }: Props) => {
+const Navbar = () => {
   const router = useRouter();
   const pathname = usePathname();
   const [loadingStudents, setLoadingStudents] = useState(false);
@@ -77,7 +73,7 @@ const Navbar = ({ username }: Props) => {
           </Link>
         </div>
         <div>
-          <span className="text-white mr-3 text-sm">Welcome {username} 👋</span>
+          <span className="text-white mr-3 text-sm">Welcome 👋</span>
           <button
             onClick={handleLogout}
             className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white   mt-4 lg:mt-0"
