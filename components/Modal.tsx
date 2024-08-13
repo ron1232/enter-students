@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { X } from "react-feather";
 
 interface Props {

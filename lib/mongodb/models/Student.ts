@@ -1,7 +1,6 @@
 "use server";
 
 import { ClassGrade } from "@/enums";
-import { Assignment } from "@/types";
 import { ObjectId } from "mongodb";
 import mongoose, { Document, Schema } from "mongoose";
 import { IAssignment } from "./Assignment";
