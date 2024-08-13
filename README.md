@@ -14,4 +14,5 @@ NEXTAUTH_URL=http://localhost:3000/
 5. Go to http://localhost:3000/api/seed
    This will seed mongodb database
 6. Go to http://localhost:3000 and login with username: ronbarak, id: 554875621
+
    This will redirect you to http://localhost:3000/admin/students
