@@ -157,6 +157,7 @@ const EditOrAddStudentForm = ({
             defaultValue={undefined}
             render={({ field }) => (
               <Select
+                placeholder="Select an assignment"
                 isMulti
                 {...field}
                 className="basic-multi-select text-left"
