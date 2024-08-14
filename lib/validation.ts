@@ -20,7 +20,7 @@ export const EditOrAddAssignmentFormValidation = z.object({
   body: z
     .string()
     .min(2, "Body must be at least 2 characters")
-    .max(50, "Body must be at most 50 characters"),
+    .max(100, "Body must be at most 50 characters"),
 });
 
 export const EditOrAddStudentFormValidation = z.object({
